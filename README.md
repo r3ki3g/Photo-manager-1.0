@@ -10,7 +10,7 @@ Just search by the description or peoples name, use the filter by people option 
 ### Favorite
 Favorites will be shown in the home page when you visit the Photo-manager.
 
-## Technical details for NERDS
+## Technical details for developers
 ### Face Recognition
 Face recognition is handled by a separate Python-Flask API server dedicated for AI. Requests are made when new photos are uploaded.
 Using a MTCNN face detector [link](https://github.com/ipazc/mtcnn) followed by a pre-processor followed by a Face-Net [link](https://github.com/davidsandberg/facenet)
