@@ -26,7 +26,8 @@ Quick intro to SFS. Really easy to manage (create tables, add records, see recor
 ### Front end
 jQuery application. Code at '/js/photomanager.js'
 ### SFS - Documentation
-```
+
+\```
 /******
  * SFS MANUAL * DATABASE MANAGEMENT  * ALL IN ONE * SIMPLE * FAST  * CLEARER *********
  
@@ -132,4 +133,4 @@ $GLOBALS['sfs-file-max-updater-in-one-script-as-multiplier'] = 50;
 is already set in top..it means you shud not exceed updating a file 50 times of its initial filesize if you use that file again in same script/php file/page ---- KEEP THIS IN MIND WHILE USING SFS -----
  */
 
-```
+\```
