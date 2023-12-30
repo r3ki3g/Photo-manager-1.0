@@ -1,5 +1,8 @@
-## Photo-manager 1.0
+# Photo-manager 1.0 with Face Recognition
+## Introduction
 This is a platform where you can manage all your photos privately. With Photo-manager, you can upload photos/photo-collections with a description, and people in the photo been tagged, so you can easily search and filter your photos.
+### Languages
+Both Sinhala and English languages are supported!
 ### Upload
 Just Drag and drop your images! Provide a breif description, Tag the people in images by search people bar, add captions per each individual image if you want.
 ### Search
@@ -8,11 +11,20 @@ Just search by the description or peoples name, use the filter by people option 
 Favorites will be shown in the home page when you visit the Photo-manager.
 
 ## Technical details for NERDS
+### Face Recognition
+Face recognition is handled by a separate Python-Flask API server dedicated for AI. Requests are made when new photos are uploaded.
+Using a MTCNN face detector [link](https://github.com/ipazc/mtcnn) followed by a pre-processor followed by a Face-Net [link](https://github.com/davidsandberg/facenet)
+In the pre-processor the faces detected in by the MTCNN are warped/rotated to improve the performence of Face-Net. 
+Face identities are calculated by the distance between teh embeddings output by Face-Net.
+When creating an account per person, face has to be set as display picture. This will be initially taken as the anchor. 
+Later all the images that person get tagged will be used as anchors iff the distance is considerebly large. (A diverese set of face examples per person!)
 ### Server - PHP
 Using a PHP 7 server (on Windows IIS 10), while most of the PHP logic is concentarted in "photo.manager.php" file.
 ### Database - SFS (Structured Function Set)
 SFS is my own database system which saves tables as .sfs files. Source code is available at "SFS.PHP" file.
 Quick intro to SFS. Really easy to manage (create tables, add records, see records, edit/delete records)
+### Front end
+jQuery application. Code at '/js/photomanager.js'
 ### SFS - Documentation
 `
 /******
