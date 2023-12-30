@@ -278,7 +278,7 @@ if (($_GET['search']??-1) !=-1)
 
                 $similarityFrac = similarity($simplifiedSQI, $thisData, intval($_GET['search']??0));
                 
-                if ($similarityFrac > 0.7) {
+                if ($similarityFrac > 0.5) {
                     echo '<img src="http://www.realfeed.com/photo.manager/' .$thisImageName. '.jpeg" style="max-width:500px;"/>'.br.br;
                 }
                 else if($similarityFrac == -1)
@@ -291,9 +291,3 @@ if (($_GET['search']??-1) !=-1)
         }
     }
 }
-
-
-
-
-
-?>

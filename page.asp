@@ -1,0 +1,5 @@
+<%
+
+response.write("hello world")
+
+%>
