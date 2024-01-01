@@ -1,4 +1,5 @@
 # Photo-manager 1.0 with Face Recognition
+[See the demo video](https://youtu.be/9TQLQlWcoSg?si=ojBd54QFrmM8HpTL)
 ## Introduction
 This is a platform where you can manage all your photos privately. With Photo-manager, you can upload photos/photo-collections with a description, and people in the photo been tagged, so you can easily search and filter your photos.
 ### Languages
