@@ -1,5 +1,5 @@
 # Photo-manager 1.0 with Face Recognition
-[See the demo video](https://youtu.be/9TQLQlWcoSg?si=ojBd54QFrmM8HpTL)
+
 ## Introduction
 This is a platform where you can manage all your photos privately. With Photo-manager, you can upload photos/photo-collections with a description, and people in the photo been tagged, so you can easily search and filter your photos.
 ### Languages
@@ -13,6 +13,7 @@ Favorites will be shown in the home page when you visit the Photo-manager.
 
 ## Technical details for developers
 ### Face Recognition
+[See the demo video](https://youtu.be/9TQLQlWcoSg?si=ojBd54QFrmM8HpTL)
 Face recognition is handled by a separate Python-Flask API server dedicated for AI. Requests are made when new photos are uploaded.
 Using a MTCNN face detector [link](https://github.com/ipazc/mtcnn) followed by a pre-processor followed by a Face-Net [link](https://github.com/davidsandberg/facenet)
 In the pre-processor the faces detected in by the MTCNN are warped/rotated to improve the performence of Face-Net. 
