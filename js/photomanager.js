@@ -1,3 +1,5 @@
+const AI_SERVER_PATH = 'http://127.0.0.1:8081/';
+
 function C(s) { console.log(s); }
 
 function T(o) { console.table(o); }
@@ -162,6 +164,9 @@ $(document).ready(function() {
                             h = res.height,
                             w = res.width,
                             photoId = res.photoid;
+                            
+                            start__automatically_tag_people(photoId);
+
                         //if duplicate found at server
                         var duplicate = res.alreadyfound;
                         var fileNameRecieved = res.filenamerecieved;
@@ -581,7 +586,8 @@ function getAllDPPreviews() {
 function addToFeaturingList(id, name, dp) {
 
     if (featuringList.includes(id)) {
-        alert("Already Added To Featuring List");
+        //alert("Already Added To Featuring List"); // commented as the auto-tagging may cause alerts
+        C("Duplicate-tag: Already Added To Featuring List");
         return false;
     }
 
@@ -1736,4 +1742,37 @@ function responsiveWidthSet() {
         C('window width change ditected and acted')
     }
 }
+
+
+function start__automatically_tag_people(photoId)
+{ $("#participantsPreviewHeader").html('Participants: <font color="red">Processing with automatic-tag-AI</font>');
+    $.ajax({
+        url: AI_SERVER_PATH + '?photoid=' + photoId,
+        type: "get",
+       
+        success: function(res) {
+            res = JSON.parse(res);
+            for(var i=0;i<res.length;i++)
+            {
+                var thisPerson = res[i];
+                addToFeaturingList(thisPerson["id"],thisPerson["name"],thisPerson["dp"]);
+
+                $("#participantsPreviewHeader").html('Participants');
+            }
+        },
+        error:
+        function()
+        {
+            $("#participantsPreviewHeader").html('Participants');
+        }
+    });
+
+}
+
+
+
+
+
+
+
 
