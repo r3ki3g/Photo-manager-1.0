@@ -53,13 +53,13 @@ def getBestMatching_ownerId(queyFaceImgRGB):
 
 
 def getAllIdsOfPersonsInTheImage(queryImageRGB):
-    allIdsOdPersons = []
+    allIdsOfPersons = []
     faces = detector.detect_faces(queryImageRGB)
     for face in faces:
         x, y, w, h = face['box']
         croppedFace = queryImageRGB[y:y+h, x:x+w, :]
-        allIdsOdPersons.append(getBestMatching_ownerId(croppedFace))
-    return allIdsOdPersons
+        allIdsOfPersons.append(getBestMatching_ownerId(croppedFace))
+    return allIdsOfPersons
 
 
 def getNameListForIdList(idList):

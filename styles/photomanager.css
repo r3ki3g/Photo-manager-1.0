@@ -1,1265 +1,1252 @@
 body {
-    margin: 0px;
-    padding: 0px;
-    margin-top: 50px;
-    font-family: helvetica;
-    background-color: #f1f1f1;
+  margin: 0px;
+  padding: 0px;
+  margin-top: 50px;
+  font-family: helvetica;
+  background-color: #eaebf8;
+
+  /*#f1f1f1; */
 }
 
 #topbar {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 50px;
-    color: #ffffff;
-    background-color: #4d4d98;
-    z-index: 200;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 50px;
+  color: #ffffff;
+  background-color: #4d4d98;
+  z-index: 200;
 }
 
-#logo {font-size: 16px;
-    font-family: helvetica;
-    font-weight: 900;
-    position: relative;
-    top: 17px;
-    left: 14px;
-    user-select: none;
-    display: block;
-    width: max-content;
-    
+#logo {
+  font-size: 16px;
+  font-family: helvetica;
+  font-weight: 900;
+  position: relative;
+  top: 17px;
+  left: 14px;
+  user-select: none;
+  display: block;
+  width: max-content;
 }
 
-#logo:hover{
-    color:#d0deff;
-    cursor:pointer;
+#logo:hover {
+  color: #d0deff;
+  cursor: pointer;
 }
 
 #uploaders {
-    display: block;
-    min-height: 44px;
-    /*  background-color: #e8e8e8; */
-    PADDING: 11PX;
+  display: block;
+  min-height: 44px;
+  /*  background-color: #e8e8e8; */
+  padding: 11px;
 }
 
 .fileUploaderInput {
-    height: auto;
-    padding: 9px;
-    width: 195px;
-    color: #ad9d9d;
-    box-shadow: 0px 0px 1px 0px #8c8c8c;
-    display: inline-block;
-    margin-left: 3px;border: solid 2px #2e5399;
-    border-radius: 3px;
+  height: auto;
+  padding: 9px;
+  width: 195px;
+  color: #ad9d9d;
+  box-shadow: 0px 0px 1px 0px #8c8c8c;
+  display: inline-block;
+  margin-left: 3px;
+  border: solid 2px #2e5399;
+  border-radius: 3px;
 }
 
 img {
-    user-select: none;
+  user-select: none;
 }
 
 #addMorePhoto {
-    margin-top: 8px;
-    display: none;
-    height: 37px;
-    width: 30px;
-    box-sizing: content-box;
-    color: #000000;
-    box-shadow: 0px 0px 2px 0px #989898;
-    font-size: 27px;
-    font-weight: 900;
-    padding-left: 14px;
-    position: relative;
-    top: 2px;
-    padding-top: 2px;
-    margin-left: 10px;
-    /* //  background-color: #cacaca; */
-    user-select: none;
+  margin-top: 8px;
+  display: none;
+  height: 37px;
+  width: 30px;
+  box-sizing: content-box;
+  color: #000000;
+  box-shadow: 0px 0px 2px 0px #989898;
+  font-size: 27px;
+  font-weight: 900;
+  padding-left: 14px;
+  position: relative;
+  top: 2px;
+  padding-top: 2px;
+  margin-left: 10px;
+  /* //  background-color: #cacaca; */
+  user-select: none;
 }
 
 #uploadersContainer {
-    display: inline-block;
+  display: inline-block;
 }
 
 #featuringBox {
-    /* background-color: #dcdcdc; */
-    padding: 22px;
+  /* background-color: #dcdcdc; */
+  padding: 22px;
 }
 
 #addFeat {
-    width: 279px;
-    padding: 6px 10px;
-    font-size: 16px;
-    text-transform: capitalize;
-    box-shadow: 0px 0px 1px 0px #888888;
+  width: 279px;
+  padding: 6px 10px;
+  font-size: 16px;
+  text-transform: capitalize;
+  box-shadow: 0px 0px 1px 0px #888888;
   border: solid 2px #2e5399;
-    border-radius: 3px;
+  border-radius: 3px;
 }
 
 #addFeaturing {
-    display: inline-block;
-    margin-left: 21px;
-    position: relative;
+  display: inline-block;
+  margin-left: 21px;
+  position: relative;
 }
 
 #submitBox {
-    /* background-color: #d6d6d6; */
-    padding: 20px;
-    min-height: 32px;
+  /* background-color: #d6d6d6; */
+  padding: 20px;
+  min-height: 32px;
 }
 
 #submitButton {
-    background-color: #5c5c98;
-    border: solid 0px #000000;
-    color: #ffffff;
-    padding: 8px 31px;
-    border-radius: 3px;
-    cursor: pointer;
-    position: absolute;
-    left: 467px;
+  background-color: #5c5c98;
+  border: solid 0px #000000;
+  color: #ffffff;
+  padding: 8px 31px;
+  border-radius: 3px;
+  cursor: pointer;
+  position: absolute;
+  left: 467px;
 }
 
 #uploadedPreviewBox {
-    /* background-color: #e8e8e8; */
-    min-height: 100px;
+  /* background-color: #e8e8e8; */
+  min-height: 100px;
 }
 
 #uploadedPreviewHeader {
-    font-family: helvetica;
-    padding: 11px;
-    margin-top: 4px;
-    display: inline-block;
+  font-family: helvetica;
+  padding: 11px;
+  margin-top: 4px;
+  display: inline-block;
 }
 
 .imgPreview-fat {
-    max-width: 220px;
-    height: auto;
-    margin: 24px;
-    box-shadow: 0px 0px 9px 0px #000000;
-    border-radius: 3px;
-    display: inline-block;
+  max-width: 220px;
+  height: auto;
+  margin: 24px;
+  box-shadow: 0px 0px 9px 0px #000000;
+  border-radius: 3px;
+  display: inline-block;
 }
 
 .imgPreview-tall {
-    width: auto;
-    max-height: 209px;
-    margin: 24px;
-    box-shadow: 0px 0px 9px 0px #000000;
-    border-radius: 3px;
-    display: inline-block;
+  width: auto;
+  max-height: 209px;
+  margin: 24px;
+  box-shadow: 0px 0px 9px 0px #000000;
+  border-radius: 3px;
+  display: inline-block;
 }
 
 .previewImgBox {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 .imageRemoveButton {
-    position: absolute;
-    top: 31px;
-    /* left: 30px; */
-    font-family: helvetica;
-    font-size: 14px;
-    /* text-shadow: 3px 0px 13px #000000; */
-    color: #ffffff;
-    cursor: pointer;
-    right: 30px;
-    font-weight: 100;
-    user-select: none;
-    background-color: #ffffff;
-    color: #d61e1e;
-    padding: 2px 11px;
-    box-shadow: 0px 0px 5px 0px #000000;
+  position: absolute;
+  top: 31px;
+  /* left: 30px; */
+  font-family: helvetica;
+  font-size: 14px;
+  /* text-shadow: 3px 0px 13px #000000; */
+  color: #ffffff;
+  cursor: pointer;
+  right: 30px;
+  font-weight: 100;
+  user-select: none;
+  background-color: #ffffff;
+  color: #d61e1e;
+  padding: 2px 11px;
+  box-shadow: 0px 0px 5px 0px #000000;
 }
 
 #discription {
-    vertical-align: middle;
-    height: 132px;
-    width: 529px;
-    font-weight: 900;
-    font-family: helvetica;
-    margin-right: 9px;
-    display: block;
-    margin-top: 22px;
-    padding: 8px;border: solid 2px #2e5399;
-    border-radius: 3px;
+  vertical-align: middle;
+  height: 132px;
+  width: 529px;
+  font-weight: 900;
+  font-family: helvetica;
+  margin-right: 9px;
+  display: block;
+  margin-top: 22px;
+  padding: 8px;
+  border: solid 2px #2e5399;
+  border-radius: 3px;
 }
 
 .captionForEach {
-    position: absolute;
-    bottom: 23px;
-    left: 19px;
-    width: 120px;
-    height: 50px;
-    background-color: transparent;
-    border: solid 0px #000000;
+  position: absolute;
+  bottom: 23px;
+  left: 19px;
+  width: 120px;
+  height: 50px;
+  background-color: transparent;
+  border: solid 0px #000000;
 }
 
 .caption_text {
-    font-weight: 900;
-    font-family: helvetica;
-    width: 152px;
-    background-color: transparent;
-    border: solid 0px #000000;
-    position: relative;
-    left: 6px;
-    text-shadow: 0px 1px 3px #131313;
-    color: #ffffff;
+  font-weight: 900;
+  font-family: helvetica;
+  width: 152px;
+  background-color: transparent;
+  border: solid 0px #000000;
+  position: relative;
+  left: 6px;
+  text-shadow: 0px 1px 3px #131313;
+  color: #ffffff;
 }
 
 #participantsPreviewBox {
-    /* background-color: #e8e8e8; */
-    min-height: 100px;
+  /* background-color: #e8e8e8; */
+  min-height: 100px;
 }
 
 #participantsPreviewHeader {
-    font-family: helvetica;
-    padding: 11px;
-    margin-top: 4px;
-    display: inline-block;
+  font-family: helvetica;
+  padding: 11px;
+  margin-top: 4px;
+  display: inline-block;
 }
 
 #suggestions {
-    z-index: 99;
-    position: absolute;
-    background-color: #ffffff;
-    display: block;
-    width: 299px;
-    box-shadow: 0px 1px 2px 0px #000000;
-    left: 1px;
-    font-family: helvetica;
+  z-index: 99;
+  position: absolute;
+  background-color: #ffffff;
+  display: block;
+  width: 299px;
+  box-shadow: 0px 1px 2px 0px #000000;
+  left: 1px;
+  font-family: helvetica;
 }
 
 .suggesion,
 #addPeopleRow {
-    font-size: 12px;
-    padding: 4px;
-    background-color: #e2e2e2;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    font-weight: 900;
-    color: #5d5da2;
-    user-select: none;
-    cursor: pointer;
+  font-size: 12px;
+  padding: 4px;
+  background-color: #e2e2e2;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-weight: 900;
+  color: #5d5da2;
+  user-select: none;
+  cursor: pointer;
 }
 
 .suggesion:hover,
 #addPeopleRow:hover {
-    background-color: #d0d0d0;
+  background-color: #d0d0d0;
 }
 
 .peoplename {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 #popUpPortal {
-    position: relative;
+  position: relative;
 }
 
 #rightclickOptionPopBoxPortal {
-    position: relative;
+  position: relative;
 }
 
 #rightClickPopBox {
-    position: fixed;
-    background-color: #000;
-    height: 70px;
-    width: 160px;
-    z-index: 151;
+  position: fixed;
+  background-color: #000;
+  height: 70px;
+  width: 160px;
+  z-index: 151;
 }
 
 #backgroundDimPortal {
-    position: absolute;
-    z-index: unset;
-    top: 0px;
+  position: absolute;
+  z-index: unset;
+  top: 0px;
 }
 
 #dimmer {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: #000000;
-    z-index: 100;
-    opacity: 0.5;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #000000;
+  z-index: 100;
+  opacity: 0.5;
 }
 
 #popUpBox {
-    display: block;
-    height: 400px;
-    width: 600px;
-    background-color: #ffffff;
-    position: fixed;
-    z-index: 150;
-    top: 42%;
-    left: 50%;
-    margin-left: -300px;
-    margin-top: -200px;
-    box-shadow: 0px 0px 5px 0px #000000;
-    border-radius: 5px;
-    padding: 0px;
-    box-sizing: border-box;
+  display: block;
+  height: 400px;
+  width: 600px;
+  background-color: #ffffff;
+  position: fixed;
+  z-index: 150;
+  top: 42%;
+  left: 50%;
+  margin-left: -300px;
+  margin-top: -200px;
+  box-shadow: 0px 0px 5px 0px #000000;
+  border-radius: 5px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 #popHead {
-    font-family: helvetica;
-    padding: 14px;
-    font-weight: 900;
-    margin: 0px;
-    background-color: #f1f1f1;
+  font-family: helvetica;
+  padding: 14px;
+  font-weight: 900;
+  margin: 0px;
+  background-color: #f1f1f1;
 }
 
 #newNameBox,
-#otherNamesBox {}
+#otherNamesBox {
+}
 
 #newName {
-    height: 30px;
-    width: 300px;
-    text-transform: capitalize;
-    margin: 10px;
-    padding-left: 13px;
+  height: 30px;
+  width: 300px;
+  text-transform: capitalize;
+  margin: 10px;
+  padding-left: 13px;
 }
 
 #otherNames {
-    height: 130px;
-    width: 300px;
-    text-transform: capitalize;
-    margin: 10px;
-    padding-left: 13px;
+  height: 130px;
+  width: 300px;
+  text-transform: capitalize;
+  margin: 10px;
+  padding-left: 13px;
 }
 
 #photoNewPersonBox {
-    position: absolute;
-    right: 34px;
-    height: 200px;
-    width: 200px;
-    background-color: #eaeaea;
-    border-radius: 3px;
-    top: 61px;
-    text-align: center;
-    cursor: pointer;
+  position: absolute;
+  right: 34px;
+  height: 200px;
+  width: 200px;
+  background-color: #eaeaea;
+  border-radius: 3px;
+  top: 61px;
+  text-align: center;
+  cursor: pointer;
 }
 
 #selectPhotoAdvice {
-    position: relative;
-    top: 30px;
-    display: inline-block;
-    margin-top: 23px;
+  position: relative;
+  top: 30px;
+  display: inline-block;
+  margin-top: 23px;
 }
 
 #imageCroperPortal {
-    position: absolute;
-    top: 0px;
+  position: absolute;
+  top: 0px;
 }
 
 #imageCroper {
-    position: absolute;
-    z-index: 150;
-    display: block;
-    height: 400px;
-    width: 700px;
-    background-color: #ffffff;
-    left: 292px;
-    top: 100px;
+  position: absolute;
+  z-index: 150;
+  display: block;
+  height: 400px;
+  width: 700px;
+  background-color: #ffffff;
+  left: 292px;
+  top: 100px;
 }
 
 #submiterNewGuy {
-    position: absolute;
-    bottom: 14px;
-    right: 153px;
-    border: solid 1px #000000;
-    background-color: #6b6bb3;
-    padding: 10px 41px;
-    color: #ffffff;
-    cursor: pointer;
+  position: absolute;
+  bottom: 14px;
+  right: 153px;
+  border: solid 1px #000000;
+  background-color: #6b6bb3;
+  padding: 10px 41px;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 #cancelNewGuy {
-    position: absolute;
-    bottom: 14px;
-    right: 23px;
-    border: solid 1px #000000;
-    background-color: #6b6bb3;
-    padding: 10px 31px;
-    color: #ffffff;
-    cursor: pointer;
+  position: absolute;
+  bottom: 14px;
+  right: 23px;
+  border: solid 1px #000000;
+  background-color: #6b6bb3;
+  padding: 10px 31px;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 .peopleSugRow {
-    background-color: #ffffff;
-    margin-top: 2px;
-    position: relative;
-    /* vertical-align: middle; */
-    padding: 7px;
+  background-color: #ffffff;
+  margin-top: 2px;
+  position: relative;
+  /* vertical-align: middle; */
+  padding: 7px;
 }
 
 .dpSug {
-    border: 1px solid #000000;
-    height: 44px;
-    width: 44px;
-    border-radius: 22px;
-    display: inline-block;
+  border: 1px solid #000000;
+  height: 44px;
+  width: 44px;
+  border-radius: 22px;
+  display: inline-block;
 }
 
 .nameSug {
-    display: inline-block;
-    text-transform: capitalize;
-    vertical-align: middle;
-    position: absolute;
-    top: 22px;
-    left: 66px;
+  display: inline-block;
+  text-transform: capitalize;
+  vertical-align: middle;
+  position: absolute;
+  top: 22px;
+  left: 66px;
 }
 
 .peopleSugRow:hover {
-    background-color: #e4e4e4;
-    cursor: pointer;
+  background-color: #e4e4e4;
+  cursor: pointer;
 }
 
 .featuringPreviewPersonDp {
-    height: 70px;
-    width: 70px;
-    border-radius: 35px;
-    box-shadow: 0px 0px 7px 0px #000000;
-    margin: 5px;
+  height: 70px;
+  width: 70px;
+  border-radius: 35px;
+  box-shadow: 0px 0px 7px 0px #000000;
+  margin: 5px;
 }
 
 .featuringPreviewPerson {
-    display: inline-block;
-    padding: 10px;
-    text-align: center;
-    position: relative;
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  position: relative;
 }
 
 .featuringPreviewPersonName {
-    font-weight: 900;
-    text-transform: capitalize;
-    font-size: 13px;
+  font-weight: 900;
+  text-transform: capitalize;
+  font-size: 13px;
 }
 
-#dragDropBoxPortal {}
+#dragDropBoxPortal {
+}
 
 #dragDropBox {
-    display: block;
-    height: 400px;
-    width: 600px;
-    background-color: #ffffff;
-    position: fixed;
-    z-index: 150;
-    top: 52%;
-    left: 50%;
-    margin-left: -300px;
-    margin-top: -200px;
-    box-shadow: 0px 0px 5px 0px #000000;
-    border-radius: 5px;
-    padding: 0px;
-    box-sizing: border-box;
-    border: dashed 2px #a7a7a7;
+  display: block;
+  height: 400px;
+  width: 600px;
+  background-color: #ffffff;
+  position: fixed;
+  z-index: 150;
+  top: 52%;
+  left: 50%;
+  margin-left: -300px;
+  margin-top: -200px;
+  box-shadow: 0px 0px 5px 0px #000000;
+  border-radius: 5px;
+  padding: 0px;
+  box-sizing: border-box;
+  border: dashed 2px #a7a7a7;
 }
 
 #dragDropEater {
-    height: 98%;
-    width: 99%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    resize: none;
-    border: 0px;
-    font-size: 27px;
-    font-family: inherit;
-    text-align: center;
-    box-sizing: border-box;
-    color: #7d7d7d;
-    padding-top: 164px;
+  height: 98%;
+  width: 99%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  resize: none;
+  border: 0px;
+  font-size: 27px;
+  font-family: inherit;
+  text-align: center;
+  box-sizing: border-box;
+  color: #7d7d7d;
+  padding-top: 164px;
 }
 
 #searchBar {
-    position: relative;
-    display: block;
-    padding: 12px;
-    background: #efefef;
-    background-color: transparent;
-    width: 652px;
-    min-height: 81px;
-    box-sizing: border-box;
+  position: relative;
+  display: block;
+  padding: 12px;
+  background: #efefef;
+  background-color: transparent;
+  width: 652px;
+  min-height: 81px;
+  box-sizing: border-box;
 }
 
 #searchQuery {
-    border: solid 2px #8c8c8c;
-    height: 40px;
-    width: 622px;
-    padding: 6px;
-    font-size: 18px;
-    padding-left: 16px;
-    box-sizing: border-box;
-    position: relative;
-    top: 4px;
-    border-radius: 7px;
+  border: solid 2px #8c8c8c;
+  height: 40px;
+  width: 622px;
+  padding: 6px;
+  font-size: 18px;
+  padding-left: 16px;
+  box-sizing: border-box;
+  position: relative;
+  top: 4px;
+  border-radius: 7px;
 }
 
 .searchFeatDp {
-    display: inline-block;
+  display: inline-block;
 }
 
 .searchFeatDpImg {
-    height: 46px;
-    width: 46px;
-    border-radius: 30px;
-    box-shadow: 0px 0px 4px 4px #cecece;
-    margin-left: 19px;
-    margin-top: 20px;
+  height: 46px;
+  width: 46px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px 4px #cecece;
+  margin-left: 19px;
+  margin-top: 20px;
 }
 
 #featImgBox {
-    /*position: absolute;
+  /*position: absolute;
     top: 19px;
     right: 646px;*/
 }
 
 .unsureGuy {
-    box-shadow: 0px 0px 3px 0px #ff0000;
+  box-shadow: 0px 0px 3px 0px #ff0000;
 }
 
 #searchHead,
 #uploadHead,
 #favoShowerRandHead,
 #latestUploadHead {
-    margin-bottom: 14px;
-    font-size: 21px;
-    padding-left: 12px;
-    color: #949494;
-    color: #8d9ddc;
+  margin-bottom: 14px;
+  font-size: 21px;
+  padding-left: 12px;
+  color: #949494;
+  color: #8d9ddc;
 }
 
 #hintToFilterBySearch {
-    display: none;
-    position: absolute;
-    /* left: 460px; */
-    right:8px;
-    color: #a0a0a0;
-    font-weight: 100;
-    /* background-color: #7d88c1; */
-    padding: 2px;
-    /* box-shadow: 0px 0px 2px 0px #000; */
-    border-radius: 2px;
-    font-size: 13px;
-    cursor: pointer;
-    user-select: none;
+  display: none;
+  position: absolute;
+  /* left: 460px; */
+  right: 8px;
+  color: #a0a0a0;
+  font-weight: 100;
+  /* background-color: #7d88c1; */
+  padding: 2px;
+  /* box-shadow: 0px 0px 2px 0px #000; */
+  border-radius: 2px;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .searchPeopleResultRow {
-    position: relative;
-    top: 0px;
-    background-color: #ffffff;
-    width: 652px;
-    box-sizing: border-box;
-    /* padding: 20px 8px; */
-    display: inline-block;
-    width: 127px;
-    /* margin-left: 12px; */
-    margin: 9px 13px 13px 14px;
-    padding-top: 16px;
-    /* box-shadow: 0px 0px 1px 0px #000000; */
-    border-radius: 12px;
-    user-select: none;
-    cursor: pointer;
+  position: relative;
+  top: 0px;
+  background-color: #ffffff;
+  width: 652px;
+  box-sizing: border-box;
+  /* padding: 20px 8px; */
+  display: inline-block;
+  width: 127px;
+  /* margin-left: 12px; */
+  margin: 9px 13px 13px 14px;
+  padding-top: 16px;
+  /* box-shadow: 0px 0px 1px 0px #000000; */
+  border-radius: 12px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .dpSearchResultPerson {
-    display: block;
-    text-align: center;
+  display: block;
+  text-align: center;
 }
 
 .dpImgSearchResultPeople {
-    height: 58px;
-    width: 58px;
-    border-radius: 65px;
-    box-shadow: 0px 0px 3px 0px #000000;
-    /* margin-left: 10px; */
-    display: inline-block;
+  height: 58px;
+  width: 58px;
+  border-radius: 65px;
+  box-shadow: 0px 0px 3px 0px #000000;
+  /* margin-left: 10px; */
+  display: inline-block;
 }
 
 .nameOfSearchResultPeople {
-    display: block;
-    vertical-align: middle;
-    position: relative;
-    /* left: -16px; */
-    padding: 5px;
-    box-sizing: border-box;
-    text-transform: capitalize;
-    /* margin-left: 18px; */
-    font-size: 16px;
-    letter-spacing: -1px;
-    font-weight: 100;
-    text-align: center;
-    margin-top: 0px;
-    padding-top: 6px;
-    padding-bottom: 13px;
-    overflow-y: hidden;
-    max-height: 26px;
+  display: block;
+  vertical-align: middle;
+  position: relative;
+  /* left: -16px; */
+  padding: 5px;
+  box-sizing: border-box;
+  text-transform: capitalize;
+  /* margin-left: 18px; */
+  font-size: 16px;
+  letter-spacing: -1px;
+  font-weight: 100;
+  text-align: center;
+  margin-top: 0px;
+  padding-top: 6px;
+  padding-bottom: 13px;
+  overflow-y: hidden;
+  max-height: 26px;
 }
 
 #searchResults {
-    /* background: #f9f9f9;
+  /* background: #f9f9f9;
     width: 651px;*/
-    background: #8d9ddc03;
-    width: 651px;
-    box-shadow: 0px 0px 4px 0px #e0e0e0;
+  background: #8d9ddc03;
+  width: 651px;
+  box-shadow: 0px 0px 4px 0px #e0e0e0;
 }
 
 .photoResultRow {
-    padding: 9px;
-    /* //background-color: #9c9c9c; */
-    position: relative;
+  padding: 9px;
+  /* //background-color: #9c9c9c; */
+  position: relative;
 }
 
-@keyframes fromBlackWightToNormal
-{
-    0%
-    {
-        filter:grayscale(100%);
-    }
-    100%
-    {
-        filter:grayscale(0%);
-    }
+@keyframes fromBlackWightToNormal {
+  0% {
+    filter: grayscale(100%);
+  }
+  100% {
+    filter: grayscale(0%);
+  }
 }
 .photoResultsImg {
-   /* animation-name:fromBlackWightToNormal;
+  /* animation-name:fromBlackWightToNormal;
     animation-duration:0.9s;
     filter:grayscale(0%);*/
-    z-index: 9;
-    /*max-height: 1000px;*/
-    /*max-width: 628px;*/
-    width: 628px;
-    /*set as dp images get out of the image if not wide enough*/
-    box-shadow: 0px 0px 3px 0px #000000;
-    border-radius: 6px;
+  z-index: 9;
+  /*max-height: 1000px;*/
+  /*max-width: 628px;*/
+  width: 628px;
+  /*set as dp images get out of the image if not wide enough*/
+  box-shadow: 0px 0px 3px 0px #000000;
+  border-radius: 6px;
 }
 
 .photoResultsImg:hover {
-    z-index: 11;
+  z-index: 11;
 }
 
 .featuringListContainer {
-    /*display:none;*/
-    position: absolute;
-    /*top: 28px;
+  /*display:none;*/
+  position: absolute;
+  /*top: 28px;
     right: 25px;*/
-    max-width: 500px;
-    text-align: right;
-    top: 15px;
-    right: 16px;
+  max-width: 500px;
+  text-align: right;
+  top: 15px;
+  right: 16px;
 }
 
 .photoResultfeaturingDpContainer {
-    display: inline-block;
-    margin-right: 9px;
-    position: relative;
+  display: inline-block;
+  margin-right: 9px;
+  position: relative;
 }
 
 .photoResultfeaturingDp {
-    z-index: 10;
-    height: 53px;
-    height: 43px;
-    /* width: 100px; */
-    border-radius: 50px;
-    box-shadow: 0px 0px 3px 0px #ffffff;
-    display: inline-block;
-    border: solid 2px #000000;
-    /* //opacity: 0.5; */
+  z-index: 10;
+  height: 53px;
+  height: 43px;
+  /* width: 100px; */
+  border-radius: 50px;
+  box-shadow: 0px 0px 3px 0px #ffffff;
+  display: inline-block;
+  border: solid 2px #000000;
+  /* //opacity: 0.5; */
 }
 
 .photoResultfeaturingDp:hover {
-    opacity: 1;
-    box-shadow: 0px 0px 6px 0px #ffffff;
-    cursor: pointer;
+  opacity: 1;
+  box-shadow: 0px 0px 6px 0px #ffffff;
+  cursor: pointer;
 }
 
 .fullSizeButton {
-    position: absolute;
-    top: 31px;
-    left: 30px;
-    font-family: helvetica;
-    font-size: 14px;
-    /* text-shadow: 3px 0px 13px #000000; */
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: 100;
-    user-select: none;
-    background-color: #ffffff;
-    color: #000000;
-    padding: 2px 11px;
-    box-shadow: 0px 0px 5px 0px #000000;
+  position: absolute;
+  top: 31px;
+  left: 30px;
+  font-family: helvetica;
+  font-size: 14px;
+  /* text-shadow: 3px 0px 13px #000000; */
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 100;
+  user-select: none;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 2px 11px;
+  box-shadow: 0px 0px 5px 0px #000000;
 }
 
 #rightBox {
-    position: absolute;
-    /* right: 0px; */
-    width: 572px;
-    top: 60px;
-    /* left: 0px; */
-    /* left: 681px; */
-    right: 9px;
-    background: #fbfbfb;
-    background-color: #ffffff;
-    padding-top: 17px;
-    margin-top: 6px;
-    padding-left: 5px;
-    box-shadow: 0px 0px 2px 0px #878787;
-    border-radius: 3px;
+  position: absolute;
+  /* right: 0px; */
+  width: 572px;
+  top: 60px;
+  /* left: 0px; */
+  /* left: 681px; */
+  right: 9px;
+  background: #fbfbfb;
+  background-color: #ffffff;
+  padding-top: 17px;
+  margin-top: 6px;
+  padding-left: 5px;
+  box-shadow: 0px 0px 6px 0px #878787;
+  border-radius: 3px;
 }
 
-#uploadHead {}
+#uploadHead {
+}
 
 #searchBox {
-    padding: 10px;
-    WIDTH: 650PX;
-    background: #f9f8f8;
-    background-color: #ffffff;
-    margin-top: 65px;
-    margin-left: 5px;
-    padding-bottom: 40px;
-    box-shadow: 0px 0px 2px 0px #878787;
-    padding-top: 18px;
-    border-radius: 4px;
+  padding: 10px;
+  width: 650px;
+  background: #f9f8f8;
+
+  border-radius: 4px;
+
+  background-color: #ffffff;
+  margin-top: 65px;
+  margin-left: 13px;
+  padding-bottom: 40px;
+  box-shadow: 0px 0px 6px 0px #878787;
 }
 
 .searchSummaryLine {
-    color: #a9a9a9;
-    padding: 12px;
-    font-weight: 900;
-    position:relative;
+  color: #a9a9a9;
+  padding: 12px;
+  font-weight: 900;
+  position: relative;
 }
 
 #showMorePhotos,
 #showMorePhotosFiltered {
-    padding: 15px;
-    font-size: 15px;
-    text-align: center;
+  padding: 15px;
+  font-size: 15px;
+  text-align: center;
 }
 
 .balckedBackground {
-    background-color: #000000;
+  background-color: #000000;
 }
 
 .whitedBackground {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .tranparentEffected {
-    opacity: 0.2;
+  opacity: 0.2;
 }
 
 .duplicateImg {
-    box-shadow: 0px 0px 9px 0px #e60000;
+  box-shadow: 0px 0px 9px 0px #e60000;
 }
 
 #duplicateWarningBox,
 #removeFavoAskingPopBox {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    min-height: 80px;
-    width: 600px;
-    z-index: 150;
-    background-color: #ffffff;
-    margin-left: -300px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 7px 0px #ffffff;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  min-height: 80px;
+  width: 600px;
+  z-index: 150;
+  background-color: #ffffff;
+  margin-left: -300px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 7px 0px #ffffff;
 }
 
 #duplicatePopHead,
 #removeFromFavoAskConfirmHead {
-    color: #ad6a6a;
-    padding: 12px;
-    font-weight: 900;
-    background-color: #fff8f8;
-    margin: 0px;
-    font-size: 14px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+  color: #ad6a6a;
+  padding: 12px;
+  font-weight: 900;
+  background-color: #fff8f8;
+  margin: 0px;
+  font-size: 14px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 #duplicatePopCont {
-    padding: 12px;
-    font-size: 13px;
-    color: #767676;
+  padding: 12px;
+  font-size: 13px;
+  color: #767676;
 }
 
 #removeFavoAskPopCont {
-    padding: 22px;
-    font-size: 13px;
-    color: #767676;
+  padding: 22px;
+  font-size: 13px;
+  color: #767676;
 }
 
 .fileNameDuplicateBox {
-    display: inline;
-    font-weight: 900;
+  display: inline;
+  font-weight: 900;
 }
 
 #okayStringDuplicate {
-    font-size: 13px;
-    padding: 0px;
-    /* text-align: right; */
-    cursor: pointer;
-    user-select: none;
-    background-color: #f3f3f3;
-    width: fit-content;
-    position: relative;
-    right: -450px;
-    padding: 7px;
-    color: #b0b0c3;
-    margin-bottom: 12px;
-    width: max-content;
+  font-size: 13px;
+  padding: 0px;
+  /* text-align: right; */
+  cursor: pointer;
+  user-select: none;
+  background-color: #f3f3f3;
+  width: fit-content;
+  position: relative;
+  right: -450px;
+  padding: 7px;
+  color: #b0b0c3;
+  margin-bottom: 12px;
+  width: max-content;
 }
 
 #okayRemoveFromFavo {
-    font-size: 13px;
-    padding: 0px;
-    /* text-align: right; */
-    cursor: pointer;
-    user-select: none;
-    background-color: #c38282;
-    width: fit-content;
-    position: relative;
-    right: -418px;
-    padding: 7px 15px;
-    color: #ffffff;
-    margin-bottom: 15px;
-    box-shadow: 0px 0px 2px 0px #969696;
-    display: inline-block;
+  font-size: 13px;
+  padding: 0px;
+  /* text-align: right; */
+  cursor: pointer;
+  user-select: none;
+  background-color: #c38282;
+  width: fit-content;
+  position: relative;
+  right: -418px;
+  padding: 7px 15px;
+  color: #ffffff;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 2px 0px #969696;
+  display: inline-block;
 }
 
 #cancelRemoveFromFavo {
-    font-size: 13px;
-    padding: 0px;
-    /* text-align: right; */
-    cursor: pointer;
-    user-select: none;
-    background-color: #c3c3c3;
-    width: fit-content;
-    position: relative;
-    right: -430px;
-    padding: 7px 16px;
-    color: #ffffff;
-    margin-bottom: 12px;
-    display: inline-block;
-    box-shadow: 0px 0px 2px 0px #969696;
+  font-size: 13px;
+  padding: 0px;
+  /* text-align: right; */
+  cursor: pointer;
+  user-select: none;
+  background-color: #c3c3c3;
+  width: fit-content;
+  position: relative;
+  right: -430px;
+  padding: 7px 16px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  display: inline-block;
+  box-shadow: 0px 0px 2px 0px #969696;
 }
 
 .addedFeaturingPeopleRemiveButton {
-    position: absolute;
-    right: 5px;
-    background-color: #ffffff;
-    height: 22px;
-    width: 22px;
-    border-radius: 15px;
-    display: block;
-    text-align: center;
-    padding-top: 5px;
-    box-sizing: border-box;
-    box-shadow: 0px 0px 1px 0px #ff2727;
-    top: 12px;
-    font-size: 11px;
-    user-select: none;
-    cursor: pointer;
+  position: absolute;
+  right: 5px;
+  background-color: #ffffff;
+  height: 22px;
+  width: 22px;
+  border-radius: 15px;
+  display: block;
+  text-align: center;
+  padding-top: 5px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 1px 0px #ff2727;
+  top: 12px;
+  font-size: 11px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .favouritedIconPreview {
-    position: absolute;
-    background-position: 0px -1px;
-    height: 25px;
-    width: 25px;
-    background-color: #a0000000;
-    top: 62px;
-    left: 33px;
-    background-image: url(http://www.realfeed.com/photo.manager/perma/transpfavo.jfif);
-    background-size: cover;
-    border-radius: 16px;
-    box-shadow: 0px 0px 1px 0px #000000;
+  position: absolute;
+  background-position: 0px -1px;
+  height: 25px;
+  width: 25px;
+  background-color: #a0000000;
+  top: 62px;
+  left: 33px;
+  background-image: url(http://www.realfeed.com/photo.manager/perma/transpfavo.jfif);
+  background-size: cover;
+  border-radius: 16px;
+  box-shadow: 0px 0px 1px 0px #000000;
 }
 
 #starredPhotoRandomShowerBox {
-    padding: 10px;
-    WIDTH: 650PX;
-    background: #f9f8f8;
-    background-color: #ffffff;
-    margin-top: 14px;
-    margin-left: 5px;
-    padding-bottom: 40px;
-    box-shadow: 0px 0px 2px 0px #878787;
-    padding-top: 18px;
-    border-radius: 4px;
-    margin-bottom: 12px;
+  padding: 10px;
+  width: 650px;
+  background: #f9f8f8;
+  background-color: #ffffff;
+  margin-top: 14px;
+  margin-left: 13px;
+  padding-bottom: 40px;
+  box-shadow: 0px 0px 6px 0px #878787;
+  padding-top: 18px;
+  border-radius: 4px;
+  margin-bottom: 12px;
 }
 
 #noFavoYetReminder {
-    color: #b9b9b9;
-    text-align: left;
-    padding: 18px;
-    font-size: 18px;
+  color: #b9b9b9;
+  text-align: left;
+  padding: 18px;
+  font-size: 18px;
 }
 
 #smallNoteNoFavo {
-    font-size: 13px;
+  font-size: 13px;
 }
 
 .favoIconSearchresults {
-    position: absolute;
-    top: 24px;
-    left: 26px;
-    box-shadow: 0px 0px 4px 2px #f8f961;
+  position: absolute;
+  top: 24px;
+  left: 26px;
+  box-shadow: 0px 0px 4px 2px #f8f961;
 }
 
 .toastBox {
-    background-color: #000000;
-    margin-bottom: 5px;
-    color: #ffffff;
-    padding: 10px 61px;
-    /* z-index: 10; */
-    box-shadow: 0px 0px 8px 0px #7d7d7d;
-    opacity: 1;
-    animation-name: toastAnim1;
-    animation-duration: 0.6s;
+  background-color: #000000;
+  margin-bottom: 5px;
+  color: #ffffff;
+  padding: 10px 61px;
+  /* z-index: 10; */
+  box-shadow: 0px 0px 8px 0px #7d7d7d;
+  opacity: 1;
+  animation-name: toastAnim1;
+  animation-duration: 0.6s;
 }
 
 .toastBox_formError {
-    background-color: #964357;
-    margin-bottom: 5px;
-    color: #ffffff;
-    padding: 10px 61px;
-    /* z-index: 10; */
-    box-shadow: 0px 0px 8px 0px #7d7d7d;
-    opacity: 1;
-    animation-name: toastAnim1;
-    animation-duration: 0.6s;
+  background-color: #964357;
+  margin-bottom: 5px;
+  color: #ffffff;
+  padding: 10px 61px;
+  /* z-index: 10; */
+  box-shadow: 0px 0px 8px 0px #7d7d7d;
+  opacity: 1;
+  animation-name: toastAnim1;
+  animation-duration: 0.6s;
 }
 
 @keyframes toastAnim1 {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 #toastPortal {
-    position: fixed;
-    top: 69px;
-    left: 355px;
-    z-index: 100;
+  position: fixed;
+  top: 69px;
+  left: 355px;
+  z-index: 100;
 }
 
 #dataTitlePortal {
-    position: absolute;
+  position: absolute;
 }
 
 #dataTitleBox {
-    position: fixed;
-    z-index: 150;
-    font-size: 13px;
-    text-transform: capitalize;
-    background-color: #ffffff;
-    height: auto;
-    width: auto;
-    max-width: 300px;
-    padding: 7px 20px;
-    box-shadow: 0px 0px 3px 0px #848484;
-    border-radius: 4px;
+  position: fixed;
+  z-index: 150;
+  font-size: 13px;
+  text-transform: capitalize;
+  background-color: #ffffff;
+  height: auto;
+  width: auto;
+  max-width: 300px;
+  padding: 7px 20px;
+  box-shadow: 0px 0px 3px 0px #848484;
+  border-radius: 4px;
 }
 
 .photoFeaturingProfileOptionProtal {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 .profileOptionPopBox {
-    background-color: #f9f9f4;
-    /* //height: 200px; */
-    width: 400px;
-    position: absolute;
-    box-shadow: 0px 0px 5px 0px #b5b5b5;
-    border-radius: 4px;
-    text-align: left;
-    top: 9px;
-    left: 0px;
-    margin-left: -200px;
-    box-sizing: border-box;
-    padding: 16px;
-    z-index: 20;
+  background-color: #f9f9f4;
+  /* //height: 200px; */
+  width: 400px;
+  position: absolute;
+  box-shadow: 0px 0px 5px 0px #b5b5b5;
+  border-radius: 4px;
+  text-align: left;
+  top: 9px;
+  left: 0px;
+  margin-left: -200px;
+  box-sizing: border-box;
+  padding: 16px;
+  z-index: 20;
 }
 
 .arrowUpProfileBox {
-    width: 0;
-    height: 0;
-    border-left: 13px solid transparent;
-    border-right: 13px solid transparent;
-    border-bottom: 9px solid #f9f9f4;
-    position: absolute;
-    left: 15px;
-    top: 1px;
-    z-index: 22;
+  width: 0;
+  height: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 9px solid #f9f9f4;
+  position: absolute;
+  left: 15px;
+  top: 1px;
+  z-index: 22;
 }
 
 .arrowUpBorderProfileBox {
-    width: 0;
-    height: 0;
-    border-left: 14px solid transparent;
-    border-right: 14px solid transparent;
-    border-bottom: 10px solid #cccccc;
-    position: absolute;
-    left: 14px;
-    top: -1px;
-    z-index: 21;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 10px solid #cccccc;
+  position: absolute;
+  left: 14px;
+  top: -1px;
+  z-index: 21;
 }
 
 .dpPRofileSettingsHEad {
-    display: inline;
-    height: 51px;
-    border-radius: 26px;
-    box-shadow: 0px 0px 5px 0px #888888;
-    margin-right: 16px;
-    vertical-align: middle;
-    cursor: pointer;
+  display: inline;
+  height: 51px;
+  border-radius: 26px;
+  box-shadow: 0px 0px 5px 0px #888888;
+  margin-right: 16px;
+  vertical-align: middle;
+  cursor: pointer;
 }
 
 .profileSettingsHead {
-    color: #868686;
-    text-transform: capitalize;
-    padding-left: 6px;
+  color: #868686;
+  text-transform: capitalize;
+  padding-left: 6px;
 }
 
 .editableNameProfileSettings {
-    padding: 7px 9px;
-    font-size: 14px;
-    text-transform: capitalize;
-    width: 228px;
-    font-weight: 900;
-    border: solid 2px #bdbdbd;
-    color: #8c8c8c;
-    border-radius: 4px;
-    margin-left: 8px;
-    text-align: left;
-    user-select: text;
+  padding: 7px 9px;
+  font-size: 14px;
+  text-transform: capitalize;
+  width: 228px;
+  font-weight: 900;
+  border: solid 2px #bdbdbd;
+  color: #8c8c8c;
+  border-radius: 4px;
+  margin-left: 8px;
+  text-align: left;
+  user-select: text;
 }
 
 .profileSettingsOtherNamesContainer {
-    position: relative;
-    text-align: right;
-    padding-right: 38px;
+  position: relative;
+  text-align: right;
+  padding-right: 38px;
 }
 
 .pofileSttingsOtherNamesBox {
-    height: 71px;
-    width: 248px;
-    border: solid 2px #bdbdbd;
-    border-radius: 4px;
-    resize: none;
-    color: #757575;
-    text-transform: capitalize;
-    padding: 4px 6px;
-    box-sizing: border-box;
-    font-size: 15px;
-    font-family: helvetica;
+  height: 71px;
+  width: 248px;
+  border: solid 2px #bdbdbd;
+  border-radius: 4px;
+  resize: none;
+  color: #757575;
+  text-transform: capitalize;
+  padding: 4px 6px;
+  box-sizing: border-box;
+  font-size: 15px;
+  font-family: helvetica;
 }
 
 #POPdPuPDATERbOX {
-    display: block;
-    height: 500px;
-    width: 800px;
-    background-color: #ffffff;
-    position: fixed;
-    z-index: 150;
-    top: 42%;
-    left: 50%;
-    margin-left: -400px;
-    margin-top: -180px;
-    box-shadow: 0px 0px 5px 0px #000000;
-    border-radius: 5px;
-    padding: 0px;
-    box-sizing: border-box;
+  display: block;
+  height: 500px;
+  width: 800px;
+  background-color: #ffffff;
+  position: fixed;
+  z-index: 150;
+  top: 42%;
+  left: 50%;
+  margin-left: -400px;
+  margin-top: -180px;
+  box-shadow: 0px 0px 5px 0px #000000;
+  border-radius: 5px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 #loadingPhotosText0 {
-    padding-top: 165px;
-    text-align: center;
-    color: #c3c3c3;
-    font-size: 19px;
+  padding-top: 165px;
+  text-align: center;
+  color: #c3c3c3;
+  font-size: 19px;
 }
 
 #proPicUpdatePhtoSuggContainer {
-    overflow-y: scroll;
-    text-align: center;
-    height: 448px;
+  overflow-y: scroll;
+  text-align: center;
+  height: 448px;
 }
 
 .suggProPicToChoose {
-    max-height: 163px;
-    cursor: pointer;
-    max-width: 242px;
-    display: inline-block;
-    margin: 9px;
-    box-shadow: 0px 0px 3px 0px #717171;
-    margin-top: 10px;
-    vertical-align: middle;
+  max-height: 163px;
+  cursor: pointer;
+  max-width: 242px;
+  display: inline-block;
+  margin: 9px;
+  box-shadow: 0px 0px 3px 0px #717171;
+  margin-top: 10px;
+  vertical-align: middle;
 }
 
 #showMoreProPicUpdateChooseImg {
-    padding: 8px;
-    user-select: none;
-    cursor: pointer;
+  padding: 8px;
+  user-select: none;
+  cursor: pointer;
 }
 
 #noMorePhotosProPicUpdateSugg {
-    padding: 8px;
-    user-select: none;
-    /* // cursor: pointer; */
+  padding: 8px;
+  user-select: none;
+  /* // cursor: pointer; */
 }
 
 #faceClickImage {
-    max-height: 400px;
-    max-width: 720px;
-    margin: 14px;
-    box-shadow: 0px 0px 4px 0px #969696;
-    border-radius: 5px;
-    cursor: pointer;
+  max-height: 400px;
+  max-width: 720px;
+  margin: 14px;
+  box-shadow: 0px 0px 4px 0px #969696;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .selectForDpImg {
-    height: 160px;
-    margin: 9px;
-    margin-top: 29px;
-    box-shadow: 0px 0px 5px 0px #959595;
-    border-radius: 80px;
-    cursor: pointer;
+  height: 160px;
+  margin: 9px;
+  margin-top: 29px;
+  box-shadow: 0px 0px 5px 0px #959595;
+  border-radius: 80px;
+  cursor: pointer;
 }
 
 #waitingForDpSuggDPUpdate {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 #dpUpdateSuccessMsg {
-    color: #17e63c;
-    font-weight: 900;
+  color: #17e63c;
+  font-weight: 900;
 }
 
 .profileSettingsButtonRow {
-    margin-top: 17px;
-    text-align: right;
-    padding-right: 11px;
+  margin-top: 17px;
+  text-align: right;
+  padding-right: 11px;
 }
 
 .updateProfileSettingsButton {
-    display: inline-block;
-    padding: 5px 27px;
-    background-color: #5c5c98;
-    color: #ffffff;
-    font-size: 12px;
-    user-select: none;
-    cursor: pointer;
+  display: inline-block;
+  padding: 5px 27px;
+  background-color: #5c5c98;
+  color: #ffffff;
+  font-size: 12px;
+  user-select: none;
+  cursor: pointer;
 }
 
 .cancelProfileSettingsButton {
-    display: inline-block;
-    padding: 5px 27px;
-    background-color: #828282;
-    color: #ffffff;
-    font-size: 12px;
-    user-select: none;
-    cursor: pointer;
+  display: inline-block;
+  padding: 5px 27px;
+  background-color: #828282;
+  color: #ffffff;
+  font-size: 12px;
+  user-select: none;
+  cursor: pointer;
 }
 
 #cancelProfileDpUpdateProccessIcon {
-    position: absolute;
-    right: 20px;
-    top: 16px;
-    color: #ffffff;
-    padding: 3px 14px;
-    background-color: #c79999;
-    font-size: 12px;
-    user-select: none;
-    cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  color: #ffffff;
+  padding: 3px 14px;
+  background-color: #c79999;
+  font-size: 12px;
+  user-select: none;
+  cursor: pointer;
 }
 
 #pastePreviousDiscriptionButton {
-    opacity: 0.5;
-    position: absolute;
-    top: 9px;
-    right: 13px;
-    display: block;
-    background-color: #626fab;
-    color: #ffffff;
-    font-size: 12px;
-    padding: 4px 14px;
-    cursor: pointer;
-    box-shadow: 0px 0px 3px 0px #989898;
-    border-radius: 3px;
-    user-select: none;
+  opacity: 0.5;
+  position: absolute;
+  top: 9px;
+  right: 13px;
+  display: block;
+  background-color: #626fab;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 4px 14px;
+  cursor: pointer;
+  box-shadow: 0px 0px 3px 0px #989898;
+  border-radius: 3px;
+  user-select: none;
 }
 
 #pastePreviousDiscriptionButton:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 #addPhotoDiscriptionHolder {
-    position: relative;
+  position: relative;
 }
 
 #latestUploadPortal {
-    min-height: 100px;
-    padding: 4px;
+  min-height: 100px;
+  padding: 4px;
 }
 
 #peopleFilterButton_0 {
-    position: absolute;
-    display: inline-block;
-    /* left: 551px; */
-    right:8px;
-    color: #fff;
-    font-weight: 100;
-    background-color: #7d88c1;
-    padding: 7px;
-    box-shadow: 0px 0px 2px 0px #000;
-    border-radius: 2px;
-    font-size: 13px;
-    cursor: pointer;
-    user-select: none;
+  position: absolute;
+  display: inline-block;
+  /* left: 551px; */
+  right: 8px;
+  color: #fff;
+  font-weight: 100;
+  background-color: #7d88c1;
+  padding: 7px;
+  box-shadow: 0px 0px 2px 0px #000;
+  border-radius: 2px;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
 }
 
-#languageSettinSelection
-{
-    position: fixed;
-top: 12px;
-right: 4px;
+#languageSettinSelection {
+  position: fixed;
+  top: 12px;
+  right: 4px;
 }
-.floatingConsole
-{
-    position: fixed;
-    right: 12px;
-    top: 50px;
-    height: 560px;
-    width: 570px;
-    font-size: 15px;
-    background-color: #ffffff;
-    z-index: 100000;
-    box-shadow: 0px 0px 4px 0px #000;
-    overflow-y:scroll;
+.floatingConsole {
+  position: fixed;
+  right: 12px;
+  top: 50px;
+  height: 560px;
+  width: 570px;
+  font-size: 15px;
+  background-color: #ffffff;
+  z-index: 100000;
+  box-shadow: 0px 0px 4px 0px #000;
+  overflow-y: scroll;
 }
-.smallPrev
-{
-    height:200px;width:auto;
+.smallPrev {
+  height: 200px;
+  width: auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
