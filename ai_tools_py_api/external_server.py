@@ -20,7 +20,7 @@ MyFaceNet = FaceNet()
 
 detector = MTCNN()
 
-JSONDIR = 'D:\ENTC\PROJECTS\Face Recognition Practice\json'
+JSONDIR = 'D:\ENTC\PROJECTS\Face_Recognition_Practice\json'
 
 
 def get_full_path(path):
