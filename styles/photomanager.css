@@ -283,6 +283,7 @@ img {
   background-color: #000000;
   z-index: 100;
   opacity: 0.5;
+  top: 0px;
 }
 
 #popUpBox {
@@ -1249,4 +1250,184 @@ img {
 .smallPrev {
   height: 200px;
   width: auto;
+}
+
+.image_holder__manualTagging {
+  position: relative;
+
+  top: 0px;
+  left: 0px;
+}
+
+.unidentified_faces_process_displayImg {
+  /* max-height: 300px;
+  max-width: 590px; */
+  position: absolute;
+}
+
+.faceBoundingBox_unIdFaceProcess {
+  border-radius: 3px;
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  background-color: #0000004f;
+  border: solid 3px #fff;
+  box-shadow: 0px 0px 7px 0px #f00;
+}
+.faceBoundingBox_unIdFaceProcess:hover {
+  background-color: transparent;
+  border: solid 1px #fff;
+  box-shadow: 0px 0px 7px 0px #000;
+}
+#unidentified_faces_process_portal {
+}
+
+#unidentified_faces_process_box {
+  display: block;
+  height: 500px;
+  width: 800px;
+  background-color: #ffffff;
+  position: fixed;
+  z-index: 150;
+  top: 52%;
+  left: 50%;
+  margin-left: -400px;
+  margin-top: -250px;
+  box-shadow: 0px 0px 5px 0px #fff;
+  border-radius: 5px;
+  padding: 0px;
+  box-sizing: border-box;
+  border: solid 2px #000;
+  /* text-align: center; */
+}
+
+#manualTagging_floating_searchBar {
+  background-color: #fff;
+  position: absolute;
+  height: 30px;
+  width: 170px;
+  display: none;
+  border-radius: 4px;
+  border: solid 2px #000;
+  box-shadow: 0px 0px 4px 0px #000;
+}
+
+#input_manualTagging_floating_searchBar {
+  border: solid 0px #000;
+  height: 25px;
+  width: 134px;
+  margin-top: 1px;
+  margin-left: 1px;
+  border-radius: 3px;
+}
+
+#ignore_manualTagging_floating_searchBar {
+  border: solid 1px #000;
+  background-color: #ffd5d5;
+  font-weight: 900;
+  color: #861d1d;
+  cursor: pointer;
+  border-radius: 5px;
+  user-select: none;
+}
+
+#manualTagging_suggestions {
+  background: #fff;
+  border: solid 2px #fff;
+}
+
+.peopleSugRow__manualTagging {
+  background-color: #ffffff;
+  margin-top: 1px;
+  position: relative;
+  vertical-align: middle;
+  padding: 0px;
+  box-shadow: 0px 0px 2px 0px #000;
+  cursor: pointer;
+}
+
+.dpSug_manualTagging {
+  user-select: none;
+  border: 1px solid #000000;
+  height: 26px;
+  width: 26px;
+  border-radius: 22px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  left: 8px;
+}
+.nameSug_manualTagging {
+  display: inline-block;
+  text-transform: capitalize;
+  vertical-align: middle;
+  position: absolute;
+  top: 12px;
+  left: 44px;
+  font-size: 10px;
+}
+
+#addPeopleRow_manualTagging {
+  font-size: 10px;
+  padding: 4px;
+  background-color: #8e8e8e;
+  margin-top: 5px;
+  margin-bottom: 2px;
+  font-weight: 900;
+  color: #fff;
+  user-select: none;
+  cursor: pointer;
+}
+
+#newName_manualTagging {
+  text-transform: capitalize;
+  font-size: 12px;
+  height: 20px;
+  padding: 3px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#otherNames_manualTagging {
+  resize: none;
+  font-size: 12px;
+  height: 80px;
+  width: 156px;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+#photoNewPersonBox_manualTagging {
+}
+
+#dp_display_for_new_guy_manuallyTagging {
+  height: 73px;
+  width: 73px;
+  position: relative;
+  left: 45px;
+  border-radius: 41px;
+  box-shadow: 0px 0px 7px 0px #000;
+}
+
+#buttonTray_manuallyTagging {
+  text-align: center;
+}
+
+#submiterNewGuy_manualTagging {
+  background: #4f4fcb;
+  border: solid 1px #000;
+  color: #fff;
+  padding: 2px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 2px 0px #000;
+}
+
+#cancelNewGuy_manualTagging {
+  background: #963434;
+  border: solid 1px #000;
+  color: #fff;
+  padding: 2px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 0px 2px 0px #000;
 }

@@ -1,4 +1,4 @@
-<?php   
+<?php
 //sleep(1);
 //root directiory declaration
 $httpRoot = 'D:/HTTP_WEB/realfeedserver/';
@@ -87,16 +87,14 @@ exit();
 */
 
 //checking language set request??
-if(in_array($language,['english','sinhala']))
-{
-setcookie('language',$language,time()+3600*24*30,'/', '', false, false);
-header('location:http://www.realfeed.com/photo.manager.php?refreshed_for_language_change');
-exit();
+if (in_array($language, ['english', 'sinhala'])) {
+    setcookie('language', $language, time() + 3600 * 24 * 30, '/', '', false, false);
+    header('location:http://www.realfeed.com/photo.manager.php?refreshed_for_language_change');
+    exit();
 }
 
 $pageLanguage = 'english';
-if(in_array($_COOKIE['language']??false,['english','sinhala']))
-{
+if (in_array($_COOKIE['language'] ?? false, ['english', 'sinhala'])) {
     $pageLanguage = $_COOKIE['language'];
 }
 
@@ -144,7 +142,7 @@ if ($upload_ === "true") {
 
 
     $imageData = getimagesize($filePath);
-   
+
 
     if ($imageData == false) // not a image file
     {
@@ -214,7 +212,7 @@ if ($upload_ === "true") {
     $key_ = $_POST["query"] ?? false;
     if (!$key_) {
         return false;
-    }//no query recived
+    } //no query recived
 
     $output["query"] = addslashes(htmlspecialchars($key_));
 
@@ -280,7 +278,7 @@ if ($upload_ === "true") {
     $outText = json_encode($output);
     echo $outText;
     exit();
-} else if ($dp == "true")//dp crop and save
+} else if ($dp == "true") //dp crop and save
 {
     $x = $_POST["x"] ?? false;
     $y = $_POST["y"] ?? false;
@@ -332,7 +330,7 @@ if ($upload_ === "true") {
     $out = json_encode($output);
     echo $out;
     exit();
-} else if ($people == "true")//add new people
+} else if ($people == "true") //add new people
 {
     $name = $_POST["name"] ?? false;
     $othernames = $_POST["othernames"] ?? false;
@@ -598,7 +596,7 @@ else if ($contentSearch == "true") {
                 'dp' => $person['dp']
             ));
 
-            array_push($GLOBALS['matchingPeopleIds'], $person['id']);// to use in photo search
+            array_push($GLOBALS['matchingPeopleIds'], $person['id']); // to use in photo search
         }
     };
     runsfs($peopleSearch);
@@ -614,7 +612,7 @@ else if ($contentSearch == "true") {
 
     $output['people'] = $GLOBALS['matchingPeopleList'];
     $output['peopleForceStoppedd'] =  !$GLOBALS['neededPeopleCount'];
-    unset($peopleSearch);// no more needed
+    unset($peopleSearch); // no more needed
 
     //photo search  ****** photo search 
 
@@ -635,7 +633,7 @@ else if ($contentSearch == "true") {
     $GLOBALS['favedPhotosInSearchResult'] =  [];
     $photoSearch['table'] = $httpRoot . '/photo.manager/db/posts.sfs';
     $photoSearch['while'] = 'neededPhotoCount';
-    $GLOBALS['neededPhotoCount'] = 20;//no use
+    $GLOBALS['neededPhotoCount'] = 20; //no use
     $photoSearch['reversed'] = true;
     $photoSearch['function'] = function ($post) {
         $photoDate = $post['date'];
@@ -770,7 +768,7 @@ else if ($contentSearch == "true") {
     $outText = json_encode($output);
     echo $outText;
     exit();
-} else if ($favoRandomPhotos == "true")//asking some favourited photos randomly
+} else if ($favoRandomPhotos == "true") //asking some favourited photos randomly
 {
     /*
 data in favourites.sfs
@@ -786,7 +784,7 @@ data in favourites.sfs
 
     shuffle($GLOBALS['favoAllArray']);
     // selecting 8 items
-    $selectedFavoPhotos = [];//selecting 8
+    $selectedFavoPhotos = []; //selecting 8
     if (count($GLOBALS['favoAllArray']) >= 8) {
         $selectedFavoPhotos = array_slice($GLOBALS['favoAllArray'], 0, 8);
     } else {
@@ -955,7 +953,7 @@ data in favourites.sfs
         };
         runsfs($findPostDB);
 
-        if ($GLOBALS['foundPhotoAtServer'])//good to go **** can favourite it
+        if ($GLOBALS['foundPhotoAtServer']) //good to go **** can favourite it
         {
             $favoriteFuncDB["table"] = $httpRoot . '/photo.manager/db/favourites.sfs';
             $favoriteFuncDB["add"]["date"] = time();
@@ -1027,7 +1025,7 @@ data in favourites.sfs
         $postId = $post['postid'];
         foreach ($GLOBALS['posts'] as $postIdRequired) :
             if ($postIdRequired == $postId) :
-                array_splice($GLOBALS['posts'], array_search($postIdRequired, $GLOBALS['posts']), 1);//removed found one
+                array_splice($GLOBALS['posts'], array_search($postIdRequired, $GLOBALS['posts']), 1); //removed found one
 
                 $photos = json_decode($post['imageids'], true);
                 foreach ($photos as $photo) :
@@ -1150,23 +1148,23 @@ data in favourites.sfs
             runsfs($peopleDB);
         }
     }
-    if (!$GLOBALS['dpNotUpdated'])//is dp udated
+    if (!$GLOBALS['dpNotUpdated']) //is dp udated
     {
         echo '{"status":"success"}';
         exit();
     }
     echo '{"status":"error"}';
     exit();
-} else if ($updateProfileSettings == 'true')//update profile settings (name and othername change)
+} else if ($updateProfileSettings == 'true') //update profile settings (name and othername change)
 {
     $profileId = $_POST['profileid'] ?? false;
     define('profileId', $profileId);
     $newName = $_POST['newname'] ?? false;
     $newOtherNames = $_POST['newothernames'] ?? false;
     $GLOBALS['profileSettingUpdated'] = false;
-    if ($profileId && $newName && $newOtherNames)//all three mus be sent
+    if ($profileId && $newName && $newOtherNames) //all three mus be sent
     {
-        if (isValidNameToSave($newName) && isValidOtherNamesToSave($newOtherNames))//both shud be valid
+        if (isValidNameToSave($newName) && isValidOtherNamesToSave($newOtherNames)) //both shud be valid
         {
             //change in people.sfs
             $peopleDB = [];
@@ -1189,323 +1187,331 @@ data in favourites.sfs
     $outText = json_encode($out);
     echo $outText;
     exit();
-} 
-else if($latestActivity == "true")
-{
+} else if ($latestActivity == "true") {
 
-    $posts = [];$historyPostsData =[];
+    $posts = [];
+    $historyPostsData = [];
     $posts['table'] = $httpRoot . '/photo.manager/db/posts.sfs';
     $posts['reversed'] = true;
-    $posts['while'] = 'postCountForHistory';$GLOBALS['postCountForHistory'] = 4;
-    $posts['function'] = function($post){
+    $posts['while'] = 'postCountForHistory';
+    $GLOBALS['postCountForHistory'] = 4;
+    $posts['function'] = function ($post) {
         countsfs('postCountForHistory');
         //date?postid?featuring?imageids?discription?about
         $postDate = $post['date'];
         $postId = $post['postid'];
-        $postFeat =$post['featuring'];
+        $postFeat = $post['featuring'];
         $postImgIds = $post['imageids'];
         $postDisc = $post['discription'];
         $postAbout = $post['about'];
 
         print_r($post);
-
-
-        
-
     };
     runsfs($posts);
-}
-
-
-else // normal front page ---language shud be considered
+} else // normal front page ---language shud be considered
 {
     define('basepath', "http://www.realfeed.com/");
 
-    if($pageLanguage == 'english')
-    {
+    if ($pageLanguage == 'english') {
 ?>
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<?= basepath; ?>styles/photomanager.css?<?= rand(); ?>" />
-        <script src="<?= basepath; ?>js/jQuery.js?<?= rand(); ?>"></script>
-        <script src="<?= basepath; ?>js/photomanager.js?<?= rand(); ?>"></script>
-        <script src="<?= basepath; ?>js/photo.manager.tracking.js?<?= rand(); ?>"></script>
-        
-        
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= basepath; ?>styles/photomanager.css?<?= rand(); ?>" />
+    <script src="<?= basepath; ?>js/jQuery.js?<?= rand(); ?>"></script>
+    <script src="<?= basepath; ?>js/photomanager.js?<?= rand(); ?>"></script>
+    <script src="<?= basepath; ?>js/photo.manager.tracking.js?<?= rand(); ?>"></script>
 
 
 
-        <title>Photo Manager 1.0 from RealFeed</title>
-    </head>
 
-    <body id="pageBody">
-        <div id="topbar">
-            <div id="logo" onclick="window.location='http:\/\/www.realfeed.com\/photo.manager.php?ref=logoclick'">Photo Manager 1.0</div>
-            <div id="rightLanguageBox">
-                <select id="languageSettinSelection" onchange="languageSet();">
-                    <option value="english" selected="true">English</option>
-                    <option value="sinhala">සිංහල</option>
-                </select>
-            </div>
+
+    <title>Photo Manager 1.0 from RealFeed</title>
+</head>
+
+<body id="pageBody">
+    <div id="topbar">
+        <div id="logo" onclick="window.location='http:\/\/www.realfeed.com\/photo.manager.php?ref=logoclick'">Photo
+            Manager 1.0</div>
+        <div id="rightLanguageBox">
+            <select id="languageSettinSelection" onchange="languageSet();">
+                <option value="english" selected="true">English</option>
+                <option value="sinhala">සිංහල</option>
+            </select>
         </div>
-        <div id="popUpPortal"></div>
-        <div id="imageCroperPortal"></div>
-        <div id="dragDropBoxPortal"></div>
-        <div id="dupplicateDitectedPortal"></div>
-        <div id="backgroundDimPortal"></div>
-        <div id="toastPortal"></div>
-        <div id="dataTitlePortal"></div>
-        <div id="rightclickOptionPopBoxPortal"></div>
-       
-        <div id="rightBox">
-            <div id="uploadHead">Upload New Photos</div>
-            <div id="uploaderForm" onsubmit="return false;" action="?jsfail=true" target="" method="post" enctype="multipart/form-data">
-                <div id="uploader">
+    </div>
+    <div id="popUpPortal"></div>
+    <div id="imageCroperPortal"></div>
+    <div id="dragDropBoxPortal"></div>
+    <div id="unidentified_faces_process_portal"></div>
+    <div id="unidentified_faces_process_dim_portal"></div>
+    <div id="dupplicateDitectedPortal"></div>
+    <div id="backgroundDimPortal"></div>
+    <div id="toastPortal"></div>
+    <div id="dataTitlePortal"></div>
+    <div id="rightclickOptionPopBoxPortal"></div>
 
-                    <div id="uploaders">
-                        <div id="uploadersContainer">
-                            <input type="hidden" name="noOfFiles" id="noOfFiles" value="1" />
-                            <input type="file" name="file1" id="file1" class="fileUploaderInput" />
+    <div id="rightBox">
+        <div id="uploadHead">Upload New Photos</div>
+        <div id="uploaderForm" onsubmit="return false;" action="?jsfail=true" target="" method="post"
+            enctype="multipart/form-data">
+            <div id="uploader">
 
-                        </div>
-                        <div id="addMorePhoto">+</div>
-                        <div id="addFeaturing">
-                            <input type="text" id="addFeat" onblur="{if($('#addFeat').val()!=''){return false;}$('#suggestions').html('');}" placeholder="Add Participants" autocomplete="off" />
-                            <div id="suggestions">
+                <div id="uploaders">
+                    <div id="uploadersContainer">
+                        <input type="hidden" name="noOfFiles" id="noOfFiles" value="1" />
+                        <input type="file" name="file1" id="file1" class="fileUploaderInput" />
+
+                    </div>
+                    <div id="addMorePhoto">+</div>
+                    <div id="addFeaturing">
+                        <input type="text" id="addFeat"
+                            onblur="{if($('#addFeat').val()!=''){return false;}$('#suggestions').html('');}"
+                            placeholder="Add Participants" autocomplete="off" />
+                        <div id="suggestions">
 
 
-                            </div>
-
-
-
-                        </div>
-                        <div id="addPhotoDiscriptionHolder">
-                            <textarea id="discription" placeholder="Short discription #tags or key words"></textarea><?php
-                                                                                                                        //show a button to paste the previous discription
-                                                                                                                        $placehold = $_GET['placehold'] ?? false;
-                                                                                                                        if ($placehold && strlen($placehold) < 500) {
-                                                                                                                            echo '<div data-title="<innerHTML>#prevoiusDiscriptionStorage" id="pastePreviousDiscriptionButton">Paste Previous Discription</div><div id="prevoiusDiscriptionStorage" style="display:none;">' . htmlspecialchars($placehold) . '</div>';
-                                                                                                                        }
-
-                                                                                                                        ?>
                         </div>
 
 
 
-
-
                     </div>
-                    <div id="discriptionBox">
+                    <div id="addPhotoDiscriptionHolder">
+                        <textarea id="discription"
+                            placeholder="Short discription #tags or key words"></textarea><?php
+                                                                                                                            //show a button to paste the previous discription
+                                                                                                                            $placehold = $_GET['placehold'] ?? false;
+                                                                                                                            if ($placehold && strlen($placehold) < 500) {
+                                                                                                                                echo '<div data-title="<innerHTML>#prevoiusDiscriptionStorage" id="pastePreviousDiscriptionButton">Paste Previous Discription</div><div id="prevoiusDiscriptionStorage" style="display:none;">' . htmlspecialchars($placehold) . '</div>';
+                                                                                                                            }
 
-
-
+                                                                                                                            ?>
                     </div>
 
 
 
 
 
+                </div>
+                <div id="discriptionBox">
+
 
 
                 </div>
-                <div id="uploadedPreviewBox">
-                    <span id="uploadedPreviewHeader">Preview</span>
-                    <div id="addPreviews"></div>
 
 
-                </div>
-                <div id="participantsPreviewBox">
-                    <span id="participantsPreviewHeader">Participants:</span>
-                    <div id="addParticipants"></div>
 
 
-                </div>
-                <div id="submitBox"> <button onclick="saveAllToPhotos();" value="Save" id="submitButton">Save</button></div>
+
+
+
             </div>
-            <!---history -->
-            <div id="latestUploadHead">Latest Uploads</div>
-                <div id="latestUploadPortal">
-                    
-                </div>
+            <div id="uploadedPreviewBox">
+                <span id="uploadedPreviewHeader">Preview</span>
+                <div id="addPreviews"></div>
+
+
+            </div>
+            <div id="participantsPreviewBox">
+                <span id="participantsPreviewHeader">Participants:</span>
+                <div id="addParticipants"></div>
+
+
+            </div>
+            <div id="submitBox"> <button onclick="saveAllToPhotos();" value="Save" id="submitButton">Save</button></div>
+        </div>
+        <!---history -->
+        <div id="latestUploadHead">Latest Uploads</div>
+        <div id="latestUploadPortal">
 
         </div>
-        <div id="leftBox">
-            <div id="searchBox">
-                <div id="searchHead">Search for images in your collection</div>
-                <div id="searchContent">
 
-                    <div id="searchBar">
-                        <input type="text" id="searchQuery" onkeyup="proceedSearch(event);" placeholder="Search By Names or Discriptions ..." />
-                        <div id="featImgBox"></div>
-                    </div>
-                    <div id="searchResults">
+    </div>
+    <div id="leftBox">
+        <div id="searchBox">
+            <div id="searchHead">Search for images in your collection</div>
+            <div id="searchContent">
 
-
-                    </div>
+                <div id="searchBar">
+                    <input type="text" id="searchQuery" onkeyup="proceedSearch(event);"
+                        placeholder="Search By Names or Discriptions ..." />
+                    <div id="featImgBox"></div>
                 </div>
+                <div id="searchResults">
 
 
-
-
+                </div>
             </div>
-            <div id="starredPhotoRandomShowerBox">
-                <div id="favoShowerRandHead">From your Favourites</div>
-                <div id="favoRandPhotoShowerPortal"></div>
 
 
-            </div>
+
+
         </div>
+        <div id="starredPhotoRandomShowerBox">
+            <div id="favoShowerRandHead">From your Favourites</div>
+            <div id="favoRandPhotoShowerPortal"></div>
 
 
-
-
-
-
-
-    </body>
-
-    </html><?php
-    }//language =  english over
-
-    if($pageLanguage == 'sinhala')
-    {
-?>
-    <!DOCTYPE html>
-    <html lang="sin">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="<?= basepath; ?>styles/photomanager.css?<?= rand(); ?>" />
-        <script src="<?= basepath; ?>js/jQuery.js?<?= rand(); ?>"></script>
-        <script src="<?= basepath; ?>js/sinhala/photomanager.sinhala.js?<?= rand(); ?>"></script>
-        <script src="<?= basepath; ?>js/photo.manager.tracking.js?<?= rand(); ?>"></script>
-
-
-        <title>Photo Manager 1.0 from RealFeed - ෆොටෝ මැනේජර් 1.0 , රියල්ෆීඩ් වෙතින්</title>
-    </head>
-
-    <body id="pageBody">
-        <div id="topbar">
-            <div id="logo" onclick="window.location='http:\/\/www.realfeed.com\/photo.manager.php?ref=logoclick'">Photo Manager 1.0<div style="font-size: 10px;color: #8081d7;">ෆොටෝ මැනේජර් 1.0, රියල්ෆීඩ් වෙතින්</div></div>
-            <div id="rightLanguageBox">
-                <select id="languageSettinSelection" onchange="languageSet();">
-                    <option value="english">English</option>
-                    <option value="sinhala" selected="true">සිංහල</option>
-                </select>
-            </div>
         </div>
-        <div id="popUpPortal"></div>
-        <div id="imageCroperPortal"></div>
-        <div id="dragDropBoxPortal"></div>
-        <div id="dupplicateDitectedPortal"></div>
-        <div id="backgroundDimPortal"></div>
-        <div id="toastPortal"></div>
-        <div id="dataTitlePortal"></div>
-        <div id="rightclickOptionPopBoxPortal"></div>
-       
-        <div id="rightBox">
-            <div id="uploadHead">නව ඡායාරූප උඩුගත කරන්න</div>
-            <div id="uploaderForm" onsubmit="return false;" action="?jsfail=true" target="" method="post" enctype="multipart/form-data">
-                <div id="uploader">
+    </div>
 
-                    <div id="uploaders">
-                        <div id="uploadersContainer">
-                            <input type="hidden" name="noOfFiles" id="noOfFiles" value="1" />
-                            <input type="file" name="file1" id="file1" class="fileUploaderInput" style="color:#ffffff" data-title="ඡායාරූප උඩුගත කිරීම"/>
+
+
+
+
+
+
+</body>
+
+</html><?php
+            } //language =  english over
+
+            if ($pageLanguage == 'sinhala') {
+                ?>
+<!DOCTYPE html>
+<html lang="sin">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= basepath; ?>styles/photomanager.css?<?= rand(); ?>" />
+    <script src="<?= basepath; ?>js/jQuery.js?<?= rand(); ?>"></script>
+    <script src="<?= basepath; ?>js/sinhala/photomanager.sinhala.js?<?= rand(); ?>"></script>
+    <script src="<?= basepath; ?>js/photo.manager.tracking.js?<?= rand(); ?>"></script>
+
+
+    <title>Photo Manager 1.0 from RealFeed - ෆොටෝ මැනේජර් 1.0 , රියල්ෆීඩ් වෙතින්</title>
+</head>
+
+<body id="pageBody">
+    <div id="topbar">
+        <div id="logo" onclick="window.location='http:\/\/www.realfeed.com\/photo.manager.php?ref=logoclick'">Photo
+            Manager 1.0<div style="font-size: 10px;color: #8081d7;">ෆොටෝ මැනේජර් 1.0, රියල්ෆීඩ් වෙතින්</div>
+        </div>
+        <div id="rightLanguageBox">
+            <select id="languageSettinSelection" onchange="languageSet();">
+                <option value="english">English</option>
+                <option value="sinhala" selected="true">සිංහල</option>
+            </select>
+        </div>
+    </div>
+    <div id="popUpPortal"></div>
+    <div id="imageCroperPortal"></div>
+    <div id="dragDropBoxPortal"></div>
+    <div id="dupplicateDitectedPortal"></div>
+    <div id="backgroundDimPortal"></div>
+    <div id="toastPortal"></div>
+    <div id="dataTitlePortal"></div>
+    <div id="rightclickOptionPopBoxPortal"></div>
+
+    <div id="rightBox">
+        <div id="uploadHead">නව ඡායාරූප උඩුගත කරන්න</div>
+        <div id="uploaderForm" onsubmit="return false;" action="?jsfail=true" target="" method="post"
+            enctype="multipart/form-data">
+            <div id="uploader">
+
+                <div id="uploaders">
+                    <div id="uploadersContainer">
+                        <input type="hidden" name="noOfFiles" id="noOfFiles" value="1" />
+                        <input type="file" name="file1" id="file1" class="fileUploaderInput" style="color:#ffffff"
+                            data-title="ඡායාරූප උඩුගත කිරීම" />
+
+                    </div>
+                    <div id="addMorePhoto">+</div>
+                    <div id="addFeaturing">
+                        <input type="text" id="addFeat"
+                            onblur="{if($('#addFeat').val()!=''){return false;}$('#suggestions').html('');}"
+                            placeholder="රූපයේ සිටින අය ඇතුලත් කරන්න" autocomplete="off" />
+                        <div id="suggestions">
+
 
                         </div>
-                        <div id="addMorePhoto">+</div>
-                        <div id="addFeaturing">
-                            <input type="text" id="addFeat" onblur="{if($('#addFeat').val()!=''){return false;}$('#suggestions').html('');}" placeholder="රූපයේ සිටින අය ඇතුලත් කරන්න" autocomplete="off" />
-                            <div id="suggestions">
-
-
-                            </div>
-
-
-
-                        </div>
-                        <div id="addPhotoDiscriptionHolder">
-                            <textarea id="discription" placeholder="කුඩා හැදින්වීමක් හෝ #ටැග් එකක් හෝ යතුරක් දමන්න"></textarea><?php
-                                                                                                                        //show a button to paste the previous discription
-                                                                                                                        $placehold = $_GET['placehold'] ?? false;
-                                                                                                                        if ($placehold && strlen($placehold) < 500) {
-                                                                                                                            echo '<div data-title="<innerHTML>#prevoiusDiscriptionStorage" id="pastePreviousDiscriptionButton">පසුගිය හැදින්වීම ම අලවන්න</div><div id="prevoiusDiscriptionStorage" style="display:none;">' . htmlspecialchars($placehold) . '</div>';
-                                                                                                                        }
-
-                                                                                                                        ?>
-                        </div>
-
-
 
 
 
                     </div>
-                    <div id="discriptionBox">
+                    <div id="addPhotoDiscriptionHolder">
+                        <textarea id="discription"
+                            placeholder="කුඩා හැදින්වීමක් හෝ #ටැග් එකක් හෝ යතුරක් දමන්න"></textarea><?php
+                                                                                                                                    //show a button to paste the previous discription
+                                                                                                                                    $placehold = $_GET['placehold'] ?? false;
+                                                                                                                                    if ($placehold && strlen($placehold) < 500) {
+                                                                                                                                        echo '<div data-title="<innerHTML>#prevoiusDiscriptionStorage" id="pastePreviousDiscriptionButton">පසුගිය හැදින්වීම ම අලවන්න</div><div id="prevoiusDiscriptionStorage" style="display:none;">' . htmlspecialchars($placehold) . '</div>';
+                                                                                                                                    }
 
-
-
+                                                                                                                                    ?>
                     </div>
 
 
 
 
 
+                </div>
+                <div id="discriptionBox">
+
 
 
                 </div>
-                <div id="uploadedPreviewBox">
-                    <span id="uploadedPreviewHeader">රූප අයිතම</span>
-                    <div id="addPreviews"></div>
 
 
-                </div>
-                <div id="participantsPreviewBox">
-                    <span id="participantsPreviewHeader">රූපයේ සිටින අය</span>
-                    <div id="addParticipants"></div>
 
 
-                </div>
-                <div id="submitBox"> <button onclick="saveAllToPhotos();" value="Save" id="submitButton" style="left: 438px;">සුරකින්න</button></div>
+
+
+
             </div>
-            <!---history -->
-            <div id="latestUploadHead">ලගදීම කල උඩුගත කිරීම්</div>
-                <div id="latestUploadPortal">
-                    
-                </div>
+            <div id="uploadedPreviewBox">
+                <span id="uploadedPreviewHeader">රූප අයිතම</span>
+                <div id="addPreviews"></div>
+
+
+            </div>
+            <div id="participantsPreviewBox">
+                <span id="participantsPreviewHeader">රූපයේ සිටින අය</span>
+                <div id="addParticipants"></div>
+
+
+            </div>
+            <div id="submitBox"> <button onclick="saveAllToPhotos();" value="Save" id="submitButton"
+                    style="left: 438px;">සුරකින්න</button></div>
+        </div>
+        <!---history -->
+        <div id="latestUploadHead">ලගදීම කල උඩුගත කිරීම්</div>
+        <div id="latestUploadPortal">
 
         </div>
-        <div id="leftBox">
-            <div id="searchBox">
-                <div id="searchHead">ඔබගේ ඡායාරූප එකතුව තුල සොයන්න</div>
-                <div id="searchContent">
 
-                    <div id="searchBar">
-                        <input type="text" id="searchQuery" onkeyup="proceedSearch(event);" placeholder="නම් හෝ හැදින්වීම් මගින් සොයන්න ..." />
-                        <div id="featImgBox"></div>
-                    </div>
-                    <div id="searchResults">
+    </div>
+    <div id="leftBox">
+        <div id="searchBox">
+            <div id="searchHead">ඔබගේ ඡායාරූප එකතුව තුල සොයන්න</div>
+            <div id="searchContent">
 
-
-                    </div>
+                <div id="searchBar">
+                    <input type="text" id="searchQuery" onkeyup="proceedSearch(event);"
+                        placeholder="නම් හෝ හැදින්වීම් මගින් සොයන්න ..." />
+                    <div id="featImgBox"></div>
                 </div>
+                <div id="searchResults">
 
 
-
-
+                </div>
             </div>
-            <div id="starredPhotoRandomShowerBox">
-                <div id="favoShowerRandHead">ඔබගේ ප්‍රියතම ඡායාරූප</div>
-                <div id="favoRandPhotoShowerPortal"></div>
 
 
-            </div>
+
+
         </div>
+        <div id="starredPhotoRandomShowerBox">
+            <div id="favoShowerRandHead">ඔබගේ ප්‍රියතම ඡායාරූප</div>
+            <div id="favoRandPhotoShowerPortal"></div>
+
+
+        </div>
+    </div>
 
 
 
@@ -1513,10 +1519,10 @@ else // normal front page ---language shud be considered
 
 
 
-    </body>
+</body>
 
-    </html><?php
-    }//language =  sinhala over
+</html><?php
+            } //language =  sinhala over
 
 
 
@@ -1525,4 +1531,4 @@ else // normal front page ---language shud be considered
 
         }
 
-            ?>
+                ?>

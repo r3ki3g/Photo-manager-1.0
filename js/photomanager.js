@@ -21,13 +21,26 @@ function forceNumberize(str) {
     str = str.replace(/[^0-9\.\-]/gim, "");
     return new Number(str);
 }
-function limitter(lowerLimit,value,upperLimit)//force to be in the given range ... setting cuttofs
+function limitter(lowerLimit, value, upperLimit)//force to be in the given range ... setting cuttofs
 {
-var upperLimitedValue = Math.min(upperLimit,value);
-var upperAndLowerLimited = Math.max(lowerLimit,upperLimitedValue);
-return upperAndLowerLimited;
+    var upperLimitedValue = Math.min(upperLimit, value);
+    var upperAndLowerLimited = Math.max(lowerLimit, upperLimitedValue);
+    return upperAndLowerLimited;
 }
 
+function escapeHtml(input) {
+    return input.replace(/[&<>"']/g, function (match) {
+        return {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[match];
+    });
+}
+
+// GLOBAL VARIABLES
 
 var sessions = [{
     id: 1,
@@ -56,31 +69,36 @@ var photoResultHtmlPostSetFiltered = [];
 var photoFilteredShownNextIndex = 0;
 var finalResponsiveWidthSetForWinWidth = 0;
 var lastScrolledTimeStamp;
+var faceIndex__currentFocusedUnIdFace = null;
+var manualTagSearch = { query: "" }
+
 
 function extractJSON(str) {
     var out = false;
-    try { out = JSON.parse(str); } catch (e) {}
+    try { out = JSON.parse(str); } catch (e) { }
     return out;
 }
 
 //language setting
-function languageSet()
-{
-    var languageId = ['english','sinhala'].indexOf($('#languageSettinSelection').val());
-    if(languageId != -1)
-    {
-        window.location = 'http:\/\/www.realfeed.com/photo.manager.php?language=' + ['english','sinhala'][languageId];
+function languageSet() {
+    var languageId = ['english', 'sinhala'].indexOf($('#languageSettinSelection').val());
+    if (languageId != -1) {
+        window.location = 'http:\/\/www.realfeed.com/photo.manager.php?language=' + ['english', 'sinhala'][languageId];
     }
-    
-     
+
+
 }
 
+var AI_tagging_failed_cases_queue = []; // global var -- taken cared by process_AI_tagging_failed_cases_queue()
 
-$(document).ready(function() {
+
+$(document).ready(function () {
+
+    process_AI_tagging_failed_cases_queue();
 
     //run and set interval out to responsive widths
     responsiveWidthSet();
-    var responsiveWidth = window.setInterval(function() { responsiveWidthSet(); }, 1000);
+    var responsiveWidth = window.setInterval(function () { responsiveWidthSet(); }, 1000);
 
     /*automate-inactive:
     $('#searchQuery').val('kali lathika rekieg nandun vinul');
@@ -92,14 +110,23 @@ $(document).ready(function() {
 
 
     //avoid mozilla from loading the damn file
-    window.addEventListener('drop', function(event) { event.preventDefault(); }, true);
-    window.addEventListener('dragover', function(event) { event.preventDefault(); }, true);
+    window.addEventListener('drop', function (event) { event.preventDefault(); }, true);
+    window.addEventListener('dragover', function (event) { event.preventDefault(); }, true);
 
     //detecting file upload by drag and drop
     var mouthArea = document.getElementById("pageBody");
     mouthArea.addEventListener('dragenter', dragDropDetected1, false);
 
     function dragDropDetected1(data) {
+
+        C("dragDropDetected1 called")
+        // if AI_tagging_failed_cases_queue is not empty --|> need to manually tag persons --> avoid drag drop eater appearnce
+        if (AI_tagging_failed_cases_queue.length > 0) {
+            alert("First tag the unidentified people in the photo");
+            return;
+        }
+
+
 
         var files = data.dataTransfer.files; //not available ...
         // C(files);
@@ -153,7 +180,7 @@ $(document).ready(function() {
                 data: thisFormData,
                 contentType: false,
                 processData: false,
-                success: function(res) {
+                success: function (res) {
                     res = JSON.parse(res);
                     var status = res.status;
 
@@ -164,8 +191,8 @@ $(document).ready(function() {
                             h = res.height,
                             w = res.width,
                             photoId = res.photoid;
-                            
-                            start__automatically_tag_people(photoId);
+
+                        start__automatically_tag_people(photoId);
 
                         //if duplicate found at server
                         var duplicate = res.alreadyfound;
@@ -180,7 +207,7 @@ $(document).ready(function() {
                         var myId = sessions[currentSession]["images"].push({ "photoid": photoId, "path": fileURL, "status": "active" }) - 1;
                         C("my id " + myId)
                         C(sessions)
-                            //copy this to below one too
+                        //copy this to below one too
                         $("#addPreviews").prepend('<div id = "_' + myId + '" class="previewImgBox"><img ondblclick="toggleFavourite(\'' + photoId + '\')" id = "prevImg_' + myId + '" class="' + className + ' prevImgElem' + additionalClassStr + '"  data-real-height="' + h + '" data-real-width="' + w + '" src="' + fileURL + '"/><div class="imageRemoveButton" onclick="removePhoto(' + myId + ');">Remove</div> <div class="fullSizeButton"><span href="' + fileURL + '" target="_blank" style="text-decoration:none;" onclick="zoomPreviewPhoto(\'prevImg_' + myId + '\');">Zoom</span></div>\
                         \
                         \
@@ -248,7 +275,7 @@ $(document).ready(function() {
 
     });*/
 
-    $("#addFeat").keyup(function() {
+    $("#addFeat").keyup(function () {
 
         //if enter pressed -- select first guy suggested
         var key = event.keyCode ? event.keyCode : event.which;
@@ -271,7 +298,7 @@ $(document).ready(function() {
             url: "http:\/\/www.realfeed.com/photo.manager.php?suggesions=people",
             type: "post",
             data: { "query": val },
-            success: function(res) {
+            success: function (res) {
                 C(res);
 
                 if (search.query == val) {
@@ -323,14 +350,14 @@ $(document).ready(function() {
     // show last phot upload  as history
     showLastPhotoUploadHistoy();
     //prevoius discription paste button function setting
-    $("#pastePreviousDiscriptionButton").click(function() {
+    $("#pastePreviousDiscriptionButton").click(function () {
         var prevDisc = $('#prevoiusDiscriptionStorage').html();
         C(prevDisc)
         $('#discription').val(prevDisc);
         $(this).hide();
     });
     //auto hide pevious discription paste button if user typed a long discription theirselves ... other wise show it
-    $('#discription').keyup(function() {
+    $('#discription').keyup(function () {
         if ($(this).val().length > 41) {
             $('#pastePreviousDiscriptionButton').hide(154);
         } else {
@@ -343,7 +370,7 @@ $(document).ready(function() {
 });
 
 function setFileUploadivityForNewbies() {
-    $(".fileUploaderInput[data-upload-func-set!=true]").change(function() {
+    $(".fileUploaderInput[data-upload-func-set!=true]").change(function () {
 
         var currentUploadElem = this;
         var fileName = $(this).val();
@@ -363,7 +390,7 @@ function setFileUploadivityForNewbies() {
             data: thisFormData,
             contentType: false,
             processData: false,
-            success: function(res) {
+            success: function (res) {
                 res = JSON.parse(res);
                 var status = res.status;
 
@@ -427,7 +454,7 @@ function addNewGuy(name) {
     <div id="photoNewPersonBox" onclick="selectFace();"><span id="selectPhotoAdvice">Select Photo of Face<br/></span></div>\
     <button id="submiterNewGuy">Add</button><button id="cancelNewGuy" onclick="cancelNewGuy();">Cancel</button>\
     </div></div>');
-    $("#submiterNewGuy").click(function() {
+    $("#submiterNewGuy").click(function () {
         var name = $("#newName").val();
         var othernames = $("#otherNames").val();
         var dp = newGuy.setDP;
@@ -436,7 +463,7 @@ function addNewGuy(name) {
             url: "http://www.realfeed.com/photo.manager.php?addpeople=true",
             data: { "name": name, "othernames": othernames, "dp": dp },
             method: "post",
-            success: function(res) {
+            success: function (res) {
                 res = JSON.parse(res);
                 if (res.status == "success") {
                     $("#backgroundDimPortal").html('');
@@ -468,7 +495,7 @@ function selectFace() {
     $("#dimmer").hide();
     $("#popUpBox").hide();
 
-    $(".prevImgElem").click(function() {
+    $(".prevImgElem").click(function () {
         var thisImgElem = this;
         var posImg = $(thisImgElem).position();
         var mouseX = event.clientX,
@@ -516,7 +543,7 @@ function selectFace() {
 
         $("#cropImg").css({ "height": height, "width": width, "top": posTop, "left": posLeft, "position": "absolute" });
 
-        $("#cropImg").click(function() {
+        $("#cropImg").click(function () {
             var pos = $(this).position();
             var x = event.clientX;
             var y = event.clientY;
@@ -559,7 +586,7 @@ function getAllDPPreviews() {
         method: "post",
         url: "http://www.realfeed.com/photo.manager.php?dp=true",
         data: { "src": newGuy.src, "x": newGuy.coordX, "y": newGuy.coordY },
-        success: function(res) {
+        success: function (res) {
             res = JSON.parse(res);
             if (res.status == "success") {
                 newGuy.dps = res.urls;
@@ -568,7 +595,7 @@ function getAllDPPreviews() {
                 $("#photoNewPersonBox").html('<img id="dpSelecter" src="http:\/\/www.realfeed.com/photo.manager\/' + res.urls[0] + '.jpeg" style="height:200px;width:200px;"/>');
                 $("#photoNewPersonBox").attr("onclick", "{}");
 
-                $("#dpSelecter").click(function() {
+                $("#dpSelecter").click(function () {
                     var i = newGuy.dpNo + 1;
                     if (newGuy.dps.length <= i) { i = 0; }
                     C("i " + i)
@@ -647,7 +674,7 @@ function saveAllToPhotos() {
         method: "post",
         url: "http://www.realfeed.com/photo.manager.php?addphotos=true",
         data: { "datastring": sendingPackageString },
-        success: function(res) {
+        success: function (res) {
             res = JSON.parse(res);
             if (res.status == "success") {
                 window.location = "http:\/\/www.realfeed.com/photo.manager.php?placehold=" + encodeURI(discription);
@@ -685,7 +712,7 @@ function filterByPeopleSetUp() {
 
     }
 
-    $(".searchPeopleResultRow[data-profileid]").click(function() {
+    $(".searchPeopleResultRow[data-profileid]").click(function () {
 
         var thisSelectablePersonId = $(this).attr('data-profileid');
         //if not selected yet => select and indicate :stop
@@ -828,7 +855,7 @@ function proceedSearch(event) {
             url: "http://www.realfeed.com/photo.manager.php?contentsearch=true",
             data: { "query": searchQuery },
             method: "post",
-            success: function(res) {
+            success: function (res) {
                 res = extractJSON(res);
 
                 if (res && res.status == "success") {
@@ -952,7 +979,7 @@ function showMorePhotosSearch() {
     }
 
     setDataTitleToNotSet();
-    
+
     setProfileOptionToNotSet();
     setRightClickOptionsToNotSet();
 }
@@ -999,7 +1026,7 @@ function noMoreSearchPhotos() {
     $('#showMorePhotos').html('That\'s All .  No more Photos');
 
     $('#showMorePhotos').off('mouseover');
-    document.getElementById('showMorePhotos').onmouseover = function() {};
+    document.getElementById('showMorePhotos').onmouseover = function () { };
     $('#showMorePhotos').attr('onmouseover', '');
 }
 
@@ -1007,7 +1034,7 @@ function noMoreSearchPhotosFiltered() {
     $('#showMorePhotosFiltered').html('That\'s All .  No more Photos');
 
     $('#showMorePhotosFiltered').off('mouseover');
-    document.getElementById('showMorePhotosFiltered').onmouseover = function() {};
+    document.getElementById('showMorePhotosFiltered').onmouseover = function () { };
     $('#showMorePhotosFiltered').attr('onmouseover', '');
 }
 
@@ -1079,7 +1106,7 @@ function RemoveFavo(id, postId) {
         url: "http://www.realfeed.com/photo.manager.php?unfavourite=true",
         data: { "photoid": id },
         method: "post",
-        success: function(res) {
+        success: function (res) {
             res = extractJSON(res);
             if (res) //valid json
             {
@@ -1117,7 +1144,7 @@ function toggleFavo(id, postId) {
             url: "http://www.realfeed.com/photo.manager.php?unfavourite=true",
             data: { "photoid": id },
             method: "post",
-            success: function(res) {
+            success: function (res) {
                 res = extractJSON(res);
                 if (res) //valid json
                 {
@@ -1145,7 +1172,7 @@ function toggleFavo(id, postId) {
             url: "http://www.realfeed.com/photo.manager.php?favourite=true",
             data: { "photoid": id, "postid": postId },
             method: "post",
-            success: function(res) {
+            success: function (res) {
                 res = extractJSON(res);
                 if (res) //valid json
                 {
@@ -1172,7 +1199,7 @@ function showToast(message, type) {
     toastCount++;
     var toastHtml = '<div class="' + typeStyleClass + '" id="toast_' + thisToastid + '">' + message + '</div>';
     $("#toastPortal").append(toastHtml);
-    setTimeout(function() { $("#" + "toast_" + thisToastid).hide(154); }, 4000);
+    setTimeout(function () { $("#" + "toast_" + thisToastid).hide(154); }, 4000);
 
 }
 
@@ -1180,7 +1207,7 @@ function requestAndShowFavoPhotos() {
     $.ajax({
         url: 'http:\/\/www.realfeed.com\/photo.manager.php?favouriterandome=true&time=' + String(new Number(new Date())), //to stop caching
         method: 'post',
-        success: function(res) {
+        success: function (res) {
             res = extractJSON(res);
             if (res) //valid json
             {
@@ -1261,7 +1288,7 @@ function requestAndShowFavoPhotos() {
 }
 
 function setRightClickOptionsToNotSet() {
-    $(".photoResultsImg[data-mouse-middle-function-set!='true']").mousedown(function(event) {
+    $(".photoResultsImg[data-mouse-middle-function-set!='true']").mousedown(function (event) {
 
 
         if (event.which == 2) {
@@ -1280,7 +1307,7 @@ function setRightClickOptionsToNotSet() {
 
 function setDataTitleToNotSet() {
     $('#dataTitlePortal').html(''); //emptying as well
-    $('[data-title][data-title-set-function!=true]').mousemove(function(event) {
+    $('[data-title][data-title-set-function!=true]').mousemove(function (event) {
 
         var thisElem = this;
         var mouseX = event.clientX;
@@ -1319,7 +1346,7 @@ function setDataTitleToNotSet() {
     });
     $('[data-title][data-title-set-function!=true]').attr('data-title-set-function', 'true');
 
-    $('[data-title][data-title-unset-function!=true]').mouseout(function() {
+    $('[data-title][data-title-unset-function!=true]').mouseout(function () {
         var thisElem = this;
 
 
@@ -1330,7 +1357,7 @@ function setDataTitleToNotSet() {
 }
 
 function setProfileOptionToNotSet() {
-    $(".photoResultfeaturingDp[data-profileid][data-profile-option-set!=true]").click(function() {
+    $(".photoResultfeaturingDp[data-profileid][data-profile-option-set!=true]").click(function () {
         //currentProfileOptionsShowingFor
 
         var thisElem = this;
@@ -1404,7 +1431,7 @@ function requestAndShowProfileSettings(id, photoId, photoType) {
         url: 'http:\/\/www.realfeed.com\/photo.manager.php?profilesettings=true',
         method: 'post',
         data: { "profileid": id },
-        success: function(res) {
+        success: function (res) {
 
             res = extractJSON(res);
             if (res) //valid json
@@ -1446,7 +1473,7 @@ function requestAndShowProfileSettings(id, photoId, photoType) {
 }
 
 function setProfilePhotoUpdateSelectPhoto() {
-    $('.dpPRofileSettingsHEad').click(function() {
+    $('.dpPRofileSettingsHEad').click(function () {
         var profileId = $(this).attr('data-profileid');
         subjectedGuyIdProfilePicUpdate = profileId; //setting profile id globally ... useful after selecting a photo
         $("#backgroundDimPortal").html('<div id="dimmer" data-onclick="$(\'#backgroundDimPortal\').html(\'\');$(\'#dragDropBoxPortal\').html(\'\');"></div>');
@@ -1459,7 +1486,7 @@ function setProfilePhotoUpdateSelectPhoto() {
             url: 'http:\/\/www.realfeed.com\/photo.manager.php?photosfordp=true',
             method: 'post',
             data: { 'profileid': profileId },
-            success: function(res) {
+            success: function (res) {
 
                 res = extractJSON(res);
 
@@ -1583,7 +1610,7 @@ function clickOnFaceInDpUpdate(event, photoId) {
         url: 'http:\/\/www.realfeed.com\/photo.manager.php?dpcandidatesforupdatedp=true',
         data: { 'x': coordX, 'y': coordY, 'h': photoH, 'w': photoW, 'photoid': photoId },
         method: 'post',
-        success: function(res) {
+        success: function (res) {
             res = extractJSON(res);
             if (res) {
                 if (res.status == 'success') {
@@ -1638,13 +1665,13 @@ function updateDpFinalConfirmed(thisElem) {
         url: 'http:\/\/www.realfeed.com\/photo.manager.php?updatedp=true',
         method: 'post',
         data: { 'profileid': profileId, 'dpphotoid': dpPhotoId },
-        success: function(res) {
+        success: function (res) {
             res = extractJSON(res);
             if (res) {
                 if (res.status == 'success') {
 
                     $('#settingIndicatorDpUpdtaeSelection').html('<div id="dpUpdateSuccessMsg">Successfuly Updated!</div>');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $("#backgroundDimPortal").html('');
                         $('#popUpPortal').html('');
                         $('body').css('overflow', 'unset');
@@ -1659,7 +1686,7 @@ function updateDpFinalConfirmed(thisElem) {
 }
 
 function setProfileSettingUpdateButtonFunctions() { //update button
-    $(".updateProfileSettingsButton").click(function() {
+    $(".updateProfileSettingsButton").click(function () {
         var profileId = $(this).attr('data-profileid');
         var newName = $('.editableNameProfileSettings[data-profileid="' + profileId + '"]').val();
         var newOtherNames = $('.pofileSttingsOtherNamesBox[data-profileid="' + profileId + '"]').val();
@@ -1668,7 +1695,7 @@ function setProfileSettingUpdateButtonFunctions() { //update button
             url: 'http:\/\/www.realfeed.com\/photo.manager.php?updateprofilesettings=true',
             method: 'post',
             data: { 'profileid': profileId, 'newname': newName, 'newothernames': newOtherNames },
-            success: function(res) {
+            success: function (res) {
                 res = extractJSON(res);
                 if (res) {
                     var status = res.status;
@@ -1688,7 +1715,7 @@ function setProfileSettingUpdateButtonFunctions() { //update button
 
     });
     //cancel button
-    $(".cancelProfileSettingsButton").click(function() {
+    $(".cancelProfileSettingsButton").click(function () {
         var profileId = $(this).attr('data-profileid');
 
         $('.photoFeaturingProfileOptionProtal[data-id="' + profileId + '"]').html('');
@@ -1711,7 +1738,7 @@ function showLastPhotoUploadHistoy() {
         url: 'http:\/\/www.realfeed.com\/photo.manager.php?latestactivity=true',
         method: 'post',
         data: {},
-        success: function(res) {
+        success: function (res) {
 
         }
     });
@@ -1723,19 +1750,19 @@ function responsiveWidthSet() {
 
         //- 572 is for rightBox permanent  ...  other values are just calibration due to padding and stuff
         var availWidthForContBoxes = winWidth - 602 - 30;
-        var availWidthForImages = winWidth  - 602 - 100 + 56;
+        var availWidthForImages = winWidth - 602 - 100 + 56;
         var availWidthForSearchBar = winWidth - 602 - 154;
         var availWidthForSearchQuery = winWidth - 602 - 129;
         var availWidthForSearchResults = winWidth - 602 - 113 + 89;
-       
 
-        var newCssForClasses = '#searchBox,#starredPhotoRandomShowerBox{width:'+availWidthForContBoxes+'px;}\
-        .photoResultsImg{width:'+availWidthForImages+'px;}\
-        #searchBar{width:'+availWidthForSearchBar+'px;}\
-        #searchQuery{width:'+availWidthForSearchQuery+'px;}\
-        #searchResults{width:'+availWidthForSearchResults+'px;}\
+
+        var newCssForClasses = '#searchBox,#starredPhotoRandomShowerBox{width:' + availWidthForContBoxes + 'px;}\
+        .photoResultsImg{width:'+ availWidthForImages + 'px;}\
+        #searchBar{width:'+ availWidthForSearchBar + 'px;}\
+        #searchQuery{width:'+ availWidthForSearchQuery + 'px;}\
+        #searchResults{width:'+ availWidthForSearchResults + 'px;}\
         ';
-        $('head').append('<style>'+newCssForClasses+'</style>');
+        $('head').append('<style>' + newCssForClasses + '</style>');
 
 
         finalResponsiveWidthSetForWinWidth = winWidth;
@@ -1744,30 +1771,590 @@ function responsiveWidthSet() {
 }
 
 
-function start__automatically_tag_people(photoId)
-{ $("#participantsPreviewHeader").html('Participants: <font color="red">Processing with automatic-tag-AI</font>');
+/*
+****************** AUTOMATIC TAGGING ******************************************************************************************
+
+*/
+
+
+
+
+
+function start__automatically_tag_people(photoId) {
+    /*
+
+    Once the photo is uploaded to the server and the preview is shown in the GUI --> Request the faces through the AI API
+    If pretty confident about faces --> automatically tag
+    IF not so --> Show the image in a window and let user manually tag them
+
+    */
+
+    $("#participantsPreviewHeader").html('Participants: <font color="red">Processing with automatic-tag-AI</font>');
+
+    // send the request to AI API to get the face info
     $.ajax({
         url: AI_SERVER_PATH + '?photoid=' + photoId,
         type: "get",
-       
-        success: function(res) {
+
+        success: function (res) {
+
             res = JSON.parse(res);
-            for(var i=0;i<res.length;i++)
-            {
-                var thisPerson = res[i];
-                addToFeaturingList(thisPerson["id"],thisPerson["name"],thisPerson["dp"]);
+            detected_faces = res.peopleList;
+            image_dims = res.image_dims;
+
+            C("response form AI tools : detected_faces = ")
+            C(detected_faces);
+
+
+            const FACE_DISTANCE_MAX = 0.8; // if the distance is higher than this --> nee d to ask user to tag manually
+            var unidentified_faces = [];   // not so confidently-taggable faces
+
+            for (var i = 0; i < detected_faces.length; i++) {
+                var thisFace = detected_faces[i];
+                if (thisFace.distance_btw_queryFace_and_ownerFace > FACE_DISTANCE_MAX) {
+                    // face detector is not very confident about this face
+                    // let user name the person themself.
+                    unidentified_faces.push(thisFace);
+                    continue;
+                }
+
+                addToFeaturingList(thisFace["id"], thisFace["name"], thisFace["dp"]);
 
                 $("#participantsPreviewHeader").html('Participants');
             }
+
+            // now take care of the unidentified_faces if exists
+            if (unidentified_faces.length > 0) {           /*
+                        is_processing_right_now explained
+                        when user upload multiple photos at once --> they are sent to server in separate requests
+                                                                --> their face info will come to GUI in different times
+                                                                --> unidentified faces will be knon at different time
+                                                                --> need to handle through a queue (AI_tagging_failed_cases_queue)
+                                                                --> handling the queue is done :
+                                                                            every 0.5 second interval : 
+                                                                            check if , GUI is asking to manually tag 
+                                                                            for the front-elemnt 
+                                                                                if so do nothing
+                                                                                if not start
+
+
+                    */
+
+                AI_tagging_failed_cases_queue.push({
+                    photoId: photoId,
+                    unidentified_faces: unidentified_faces,
+                    is_processing_right_now: false,
+                    image_dims: image_dims
+                });
+            }
+
+
+
+
+
+
         },
         error:
-        function()
-        {
-            $("#participantsPreviewHeader").html('Participants');
-        }
+            function () {
+                $("#participantsPreviewHeader").html('Participants');
+            }
     });
 
 }
+
+
+function process_AI_tagging_failed_cases_queue() {
+
+
+    const TIME_INTERVAL = 500;
+    window.setInterval(function () {
+
+        if (AI_tagging_failed_cases_queue.length == 0) return;
+
+        // check if the first elem (case) is currently processing
+        if (AI_tagging_failed_cases_queue[0].is_processing_right_now) return;
+
+        start_process_AI_tagging_failed_front_case();
+
+
+    }, TIME_INTERVAL);
+
+
+}
+
+
+function start_process_AI_tagging_failed_front_case() {
+    /*
+        Taking care of the first uploaded photo with tagging problems --> shpw in GUI --> let user tag and add people alsoooooooooooooo
+    */
+    C("front case started");
+
+    AI_tagging_failed_cases_queue[0].is_processing_right_now = true;
+    faceIndex__currentFocusedUnIdFace = null; // to prevent confusing with previous cases' selected face index
+
+    var failedCase = AI_tagging_failed_cases_queue[0];
+    var image_dims = failedCase.image_dims;
+
+    // calc the scaling factor
+    const displayImg_maxHeight = 450;
+    const displayImg_maxWidth = 790;
+    const boxWidth_maxAvail = 800;
+
+    var newHeight = displayImg_maxHeight;
+    var scalingFactor = newHeight / image_dims.height;
+    var newWidth = scalingFactor * image_dims.width;
+    if (newWidth > displayImg_maxWidth) {
+        newWidth = displayImg_maxWidth;
+        scalingFactor = newWidth / image_dims.width;
+        newHeight = scalingFactor * image_dims.height;
+    }
+    //now, newHeight,newWidth gives the maximum area possible under constraints
+    // scaling factor too is known
+
+    var displayImg_left = (boxWidth_maxAvail - newWidth) / 2;
+
+
+    // ### show the box and dimmer in the GUI ###
+
+    $("#unidentified_faces_process_dim_portal").html('<div id="dimmer"></div>');
+    // ^ no onclicks to escape
+
+
+    // generating HTML for bounding boxes (store face coords along the way)
+    var all_scaledFaceDims = [];
+    var unId_faces_boxes_html = ``;
+    for (var i = 0; i < failedCase.unidentified_faces.length; i++) {
+        var thisFailedFace = failedCase.unidentified_faces[i];
+        C('thisFailedFace');
+        C(thisFailedFace);
+        var [left, top, w, h] = arr_scale(thisFailedFace.MTCNN_output.box, scalingFactor);
+
+
+        //boundary box is a border box (box-sizing) --> compensate for teh border
+        left -= 3;
+        top -= 3;
+        w += 6;
+        h += 6;
+
+        // give the same horizontal shift added to display image to make the display image centered
+        left += displayImg_left;
+        all_scaledFaceDims.push([left, top, w, h]);
+
+        unId_faces_boxes_html += `
+        <div class="faceBoundingBox_unIdFaceProcess" style="height:${h}px;width:${w}px;top:${top}px;left:${left}px;" id="unIdFace_boundingBox_${i}" data-faceindex="${i}">
+
+        </div>
+        
+        `;
+    }
+
+
+    var photoURL = `/photo.manager/${failedCase.photoId}.jpeg`;
+    var image_holder_html = `
+    
+    <div class="image_holder__manualTagging">
+        <img src="${photoURL}" class="unidentified_faces_process_displayImg" style="height:${newHeight}px;width:${newWidth}px;left:${displayImg_left}px;top:0px;"/>
+
+        ${unId_faces_boxes_html}
+        
+        <div id="manualTagging_floating_searchBar">
+            <input class="" id="input_manualTagging_floating_searchBar"/>
+           
+            <button class="" id="ignore_manualTagging_floating_searchBar" onclick="ignore_face_manualTagging()">X</button>
+
+            <div id="manualTagging_suggestions"></div>
+
+        </div>
+
+
+    </div>
+    
+    `;
+
+    $("#unidentified_faces_process_portal").html(`<div id="unidentified_faces_process_box">
+
+    <div id="popHead">Who are these people? </div>
+
+    ${image_holder_html}
+   
+    
+    </div>`);
+
+
+
+    // bind onclicks for unIdFace_boundingBox_
+    $(".faceBoundingBox_unIdFaceProcess").click(function () {
+
+        var faceIndex = $(this).attr("data-faceindex");
+        C("clicked on face : " + faceIndex);
+
+        var current_photo = AI_tagging_failed_cases_queue[0];
+        // check whether already tagged this person
+        var process_stage = current_photo.unidentified_faces[faceIndex].process_stage;
+        // only if not tagged before OR previous tagging attempt was failed --> show the tagging toolbar
+        if (!(process_stage == null || process_stage == "updation_error_at_server")) {
+            C("tool set kept hidden")
+            return;
+        }
+
+
+
+
+        // highligt selected face -- css
+        $(".faceBoundingBox_unIdFaceProcess").css({ "border-color": "#000", "background-color": "#0000004f" });
+        $(this).css({ "border-color": "#00f", "background-color": "transparent" });
+
+
+        // show an search bar to search people
+        var [left, top, w_, h_] = all_scaledFaceDims[parseInt(faceIndex)];
+        const TOP_SHIFT = -36; // search bar should be a little over the bounding box
+
+        $("#manualTagging_floating_searchBar").css({
+            "top": (top + TOP_SHIFT) + "px",
+            left: left + "px"
+        });
+        $("#manualTagging_floating_searchBar").show();
+        $("#input_manualTagging_floating_searchBar").focus();
+
+         // show search input and the close button
+        $("#ignore_manualTagging_floating_searchBar,#input_manualTagging_floating_searchBar").show();
+
+   
+        $("#input_manualTagging_floating_searchBar").val('');
+        $('#manualTagging_suggestions').html(``);
+
+        // update the currently focused face in the global variable
+        faceIndex__currentFocusedUnIdFace = faceIndex;
+
+
+    });
+
+    // bind the search input functionalities
+    $("#input_manualTagging_floating_searchBar").keyup(function () {
+
+        //if enter pressed -- select first guy suggested
+        // var key = event.keyCode ? event.keyCode : event.which;
+        // if (key == "13") {
+        //     $('#addFeat').val('');
+        //     addToFeaturingList(peopleFeatAdderFirstResult[0], peopleFeatAdderFirstResult[1], peopleFeatAdderFirstResult[2]);
+        //     return false; //nothing more
+
+        // }
+
+
+
+        $("#manualTagging_suggestions").hide();
+        var val = $(this).val();
+        if (val == '') { $("#manualTagging_suggestions").html(''); }
+
+        //avoid double search due to ghost key press        
+        if (manualTagSearch.query == val) { return false; }
+
+        $.ajax({
+            url: "http:\/\/www.realfeed.com/photo.manager.php?suggesions=people",
+            type: "post",
+            data: { "query": val },
+            success: function (res) {
+                C("manual tagging people search res:");
+                C(res);
+
+                if (manualTagSearch.query == val) {
+                    res = JSON.parse(res);
+                    var status = res.status;
+
+
+                    if (status == "success") {
+
+                        $("#manualTagging_suggestions").show();
+                        var suggestions = res.suggestions;
+                        C("suggestions:")
+                        C(suggestions);
+
+                        var eachSugCode = "";
+                        // var firstGuy = true;
+                        for (i in suggestions) {
+                            var thisPerson = suggestions[i];
+                            eachSugCode += '<div class="peopleSugRow__manualTagging" onclick="manual_tag_addToFeaturingList(\'' + thisPerson.id + '\',\'' + thisPerson.name + '\',\'' + thisPerson.dp + '\',\'' + faceIndex__currentFocusedUnIdFace + '\');"><img class="dpSug_manualTagging" src="http:\/\/www.realfeed.com/photo.manager/' + thisPerson.dp + '.jpeg"/><div class="nameSug_manualTagging">' + thisPerson.name + '</div></div>';
+
+                            //saving data of first guy to use in enter press
+                            // if (firstGuy) { peopleFeatAdderFirstResult = [thisPerson.id, thisPerson.name, thisPerson.dp]; }
+                            // firstGuy = false;
+                        }
+
+
+
+
+
+                        var addPeopleCode = '<div id="addPeopleRow_manualTagging" onclick="addNewGuy__IN_manual_tagging();"> + Add <span class="peoplename">' + res.query + '</span> to list</div>';
+
+                        C(addPeopleCode)
+
+                        $("#manualTagging_suggestions").html(addPeopleCode + eachSugCode);
+                    }
+
+                }
+
+
+            }
+
+        });
+        manualTagSearch.query = val; // why not at success funtion ? <-- avoid double search as well!
+
+
+    });
+
+
+
+
+}
+
+
+function arr_scale(arr, scalar) {
+    var newArr = [];
+    for (var i = 0; i < arr.length; i++) {
+        newArr.push(arr[i] * scalar);
+
+    }
+    return newArr;
+}
+
+
+function manual_tag_addToFeaturingList(id, name, dp, index) {
+    /*
+
+    1. add that manually selected person to participants list
+    2. send the face and the id of that person to update the face feature database at server
+    3. show that person is now updated at server --> disable the manual tagging for that person
+    4.  jump to next face (or next photo)
+
+    */
+
+    var current_photo = AI_tagging_failed_cases_queue[0];
+    var curent_face_index = parseInt(index);
+    // var boundingBox = current_photo["unidentified_faces"][curent_face_index]["MTCNN_output"]["box"];
+    // var current_photo_id = current_photo["photoId"];
+    var FaceNet_embeddings = current_photo["unidentified_faces"][curent_face_index]["FaceNet_embeddings"]
+
+    C(FaceNet_embeddings)
+    //1.
+    addToFeaturingList(id, name, dp);
+
+    //2.
+    var data = {
+
+        personId: id,
+        FaceNet_embeddings: JSON.stringify(FaceNet_embeddings)
+
+    };
+    C('data')
+    C(data)
+
+    // show the face is sending to the server to be updated
+    $(".faceBoundingBox_unIdFaceProcess[data-faceindex=" + curent_face_index + "]").css({
+        "border-color": "rgb(0, 255, 28)",
+        "box-shadow": "0px 0px 7px 0px #00ff40"
+
+    });
+    // remove the tagging button <-- avoid multiple clicks !! --> multiple savings at server
+    $("#manualTagging_suggestions").html('');
+    current_photo.unidentified_faces[curent_face_index].process_stage = "update_request_sent_to_server";
+    $("#manualTagging_floating_searchBar").hide();
+    $("#input_manualTagging_floating_searchBar").val('');
+
+
+    $.ajax({
+        url: AI_SERVER_PATH + 'update_face_database',
+        type: "post",
+        data: data,
+        success: function (res) {
+
+
+            res = JSON.parse(res);
+            C("update_face_database : r = ")
+            C(res);
+
+
+
+
+            if (res.status == "success") {
+                current_photo.unidentified_faces[curent_face_index].process_stage = "updated_at_server";
+
+            }
+
+            else {
+                current_photo.unidentified_faces[curent_face_index].process_stage = "updation_error_at_server";
+            }
+
+        }
+    });
+
+
+
+
+
+
+
+
+}
+
+
+var index__addNewGuyManualTagging = 0;
+var addNewGuyManualTagging_status = {};
+function addNewGuy__IN_manual_tagging() {
+
+    index__addNewGuyManualTagging++;
+
+    // hide search input and the close button
+    $("#ignore_manualTagging_floating_searchBar,#input_manualTagging_floating_searchBar").hide();
+
+    var preTypedName = escapeHtml($("#input_manualTagging_floating_searchBar").val());
+    $("#input_manualTagging_floating_searchBar").val('');
+
+    // $("#backgroundDimPortal").html('<div id="dimmer"></div>');
+    $('#manualTagging_suggestions').html(`
+
+
+            <div id="photoNewPersonBox_manualTagging" onclick="">
+            <img src="/photo.manager/perma/loading.gif" id="dp_display_for_new_guy_manuallyTagging" data-index="${index__addNewGuyManualTagging}"/>
+            </div>
+            
+            <input type="text" id="newName_manualTagging" placeholder="Name" value="${preTypedName}"/>
+            <textarea id="otherNames_manualTagging"  value="" placeholder="Other Names (helps while searching) ... Seperate with newlines"></textarea>
+
+        
+
+            <div id="buttonTray_manuallyTagging">
+                <button id="submiterNewGuy_manualTagging" onclick="sendServerReq_add_new_person_manual_tagging(${index__addNewGuyManualTagging});">Add</button>
+                <button id="cancelNewGuy_manualTagging" onclick="cancelNewGuy_manualTagging();">Cancel</button>\
+            </div>
+    `);
+
+    // get the dp to display (we have the face coords of person --> send to server and save a cropped version --> get the url --> display here)
+    var faceIndex = faceIndex__currentFocusedUnIdFace;
+    var current_photo = AI_tagging_failed_cases_queue[0];
+    /*
+        1. send the original full photo id  and the face bounderies
+        2. Server crop the face properly and save at the image path and send the photo id of the dp
+        3. replace the loading image with the recieved image path
+        4. set the dp path to the add_new_guy functionality too (need name, additional names and dp path)
+
+    */
+    var original_photo = current_photo["photoId"];
+    var face_bounding_box = current_photo.unidentified_faces[faceIndex].MTCNN_output.box;
+    var data =
+    {
+        request_type: "get_dpId_from_box",
+        original_photo: original_photo,
+        face_bounding_box: JSON.stringify(face_bounding_box)
+
+    }
+
+    addNewGuyManualTagging_status[index__addNewGuyManualTagging] = "waiting-cropping_dp";
+    $.ajax({
+        url: AI_SERVER_PATH + "get_dp_display",
+        data: data,
+        method: "post",
+        success: function (res) {
+            res = JSON.parse(res);
+            C("AI_SERVER_PATH  /  get_dp_display : resposne = ")
+            C(res);
+
+            if (res.status == "success") {
+                var dpPath = res.dpPath;
+                var dpUrl = 'photo.manager/' + dpPath + '.jpeg';
+                $(`#dp_display_for_new_guy_manuallyTagging[data-index=${index__addNewGuyManualTagging}]`).attr("src", dpUrl);
+
+
+                // dp is now ready --> ready to add the person to the people database
+                addNewGuyManualTagging_status[index__addNewGuyManualTagging] = "ready_with_dp";
+                
+
+
+            }
+
+        }
+    });
+
+   
+
+
+
+
+
+
+
+    $("#submiterNewGuy").click(function () {
+        var name = $("#newName").val();
+        var othernames = $("#otherNames").val();
+        var dp = newGuy.setDP;
+
+        $.ajax({
+            url: "http://www.realfeed.com/photo.manager.php?addpeople=true",
+            data: { "name": name, "othernames": othernames, "dp": dp },
+            method: "post",
+            success: function (res) {
+                res = JSON.parse(res);
+                if (res.status == "success") {
+                    $("#backgroundDimPortal").html('');
+                    $('#popUpPortal').html('');
+                    newGuy = {};
+
+                    //forcing search
+                    $("#addFeat").val("");
+                    $("#addFeat").val(name);
+                } else {
+                    alert("error can not add him!");
+                }
+            }
+
+
+        });
+
+
+    });
+
+}
+
+
+function sendServerReq_add_new_person_manual_tagging(index)
+{
+    // check if the index not match
+    if (index != index__addNewGuyManualTagging) 
+    {
+        alert("correspondence does not match.")
+        return;
+    }
+
+    // check if the dp is ready
+    if (addNewGuyManualTagging_status[index__addNewGuyManualTagging] != "ready_with_dp")
+    {
+        alert("Wait until the dp is loaded!");
+        return;
+    }
+
+    // all good to save at server
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
